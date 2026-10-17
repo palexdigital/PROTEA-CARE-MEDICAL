@@ -51,7 +51,7 @@
         /* Automatic Seamless Scrolling Animation for Homepage Services (Horizontal Row, No Stacking) */
         @keyframes autoScroll {
             0% { transform: translateX(0); }
-            100% { transform: translateX(calc(-350px * 5 - 24px * 5)); }
+            100% { transform: translateX(calc(-374px * 5)); }
         }
         .animate-autoscroll {
             display: flex;
@@ -870,7 +870,7 @@
                     message += `• First Visit: ${isFirstVisit}\n`;
                     message += `• Patient Age Range: ${ageRange}\n`;
 
-                    if (ageRange !== '18+ years') {
+dl                    if (ageRange !== '18+ years') {
                         const childName = document.getElementById('childFullName').value.trim();
                         let relationship = document.getElementById('relationshipToChild').value;
                         if (relationship === 'Other') {
