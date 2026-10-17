@@ -5,6 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="pageTitle">Protea Care Medical (Pty) Ltd | Dr M Kazadi | Centurion</title>
     
+    <!-- Favicon & Open Graph / Social Sharing Meta Tags using logo.png -->
+    <link rel="icon" href="logo.png" type="image/png">
+    <meta property="og:title" content="Protea Care Medical (Pty) Ltd | Dr M Kazadi | Centurion">
+    <meta property="og:description" content="Quality Care for Individuals, Women and Families. Professional, compassionate and comprehensive healthcare in Centurion.">
+    <meta property="og:image" content="logo.png">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Protea Care Medical (Pty) Ltd | Dr M Kazadi | Centurion">
+    <meta name="twitter:description" content="Quality Care for Individuals, Women and Families. Professional, compassionate and comprehensive healthcare in Centurion.">
+    <meta name="twitter:image" content="logo.png">
+
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com https://www.google.com; frame-src https://www.google.com;">
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -36,12 +47,28 @@
     <style>
         html { scroll-behavior: smooth; }
         body { background-color: #FFFFFF; color: #000000; font-family: 'DM Sans', Arial, sans-serif; }
-        .hide-scrollbar::-webkit-scrollbar {
-            display: none;
+        
+        /* Automatic Seamless Scrolling Animation for Homepage Services (Horizontal Row, No Stacking) */
+        @keyframes autoScroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-350px * 5 - 24px * 5)); }
         }
-        .hide-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
+        .animate-autoscroll {
+            display: flex;
+            flex-wrap: nowrap;
+            width: max-content;
+            animation: autoScroll 35s linear infinite;
+        }
+        .services-ticker-container:hover .animate-autoscroll {
+            animation-play-state: paused;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .animate-autoscroll {
+                animation: none;
+                width: 100%;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -62,8 +89,8 @@
             <nav class="hidden lg:flex items-center gap-8 text-xs font-semibold uppercase tracking-widest text-white">
                 <a href="#" onclick="navigateTo('home'); return false;" id="nav-home" class="transition">Home</a>
                 <a href="#" onclick="navigateTo('about'); return false;" id="nav-about" class="transition">About Us</a>
-                <a href="#" onclick="navigateTo('services'); return false;" id="nav-services" class="transition">Medical Services</a>
-                <a href="#" onclick="navigateTo('practitioner'); return false;" id="nav-practitioner" class="transition">Our Doctors</a>
+                <a href="#" onclick="navigateTo('services'); return false;" id="nav-services" class="transition">Services</a>
+                <a href="#" onclick="navigateTo('practitioner'); return false;" id="nav-practitioner" class="transition">Practitioner</a>
                 <a href="#" onclick="navigateTo('patient-info'); return false;" id="nav-patient-info" class="transition">Patient Info</a>
                 <a href="#" onclick="navigateTo('contact'); return false;" id="nav-contact" class="transition">Contact Us</a>
             </nav>
@@ -135,100 +162,172 @@
                 </div>
             </section>
 
-            <!-- Featured Medical Services Carousel Section -->
-            <section class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <!-- Services Section with Single Horizontal Row & Automatic Scrolling -->
+            <section class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
                 <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
                     <div>
                         <span class="text-xs font-bold tracking-[0.3em] uppercase text-brandNavy block mb-2">Our Capabilities</span>
-                        <h2 class="text-3xl font-bold text-brandBlack">Featured Medical Services</h2>
+                        <h2 class="text-3xl font-bold text-brandBlack">Services</h2>
                     </div>
-                    <div class="mt-4 md:mt-0 flex items-center gap-3">
-                        <button onclick="scrollCarousel(-1)" aria-label="Previous Services" class="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center hover:bg-brandNavy hover:text-white hover:border-brandNavy transition">
-                            <i data-lucide="chevron-left" class="w-5 h-5"></i>
-                        </button>
-                        <button onclick="scrollCarousel(1)" aria-label="Next Services" class="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center hover:bg-brandNavy hover:text-white hover:border-brandNavy transition">
-                            <i data-lucide="chevron-right" class="w-5 h-5"></i>
-                        </button>
+                    <div class="mt-4 md:mt-0">
+                        <a href="#" onclick="navigateTo('services'); return false;" class="bg-brandNavy hover:bg-brandNavy/90 text-white px-6 py-3 text-xs font-semibold uppercase tracking-widest transition shadow-sm inline-block">
+                            View All
+                        </a>
                     </div>
                 </div>
 
-                <div id="servicesCarousel" class="flex gap-6 overflow-x-auto hide-scrollbar pb-4 snap-x snap-mandatory scroll-smooth">
-                    <!-- Service 1 -->
-                    <div class="min-w-[300px] sm:min-w-[350px] max-w-[350px] bg-white border border-gray-200 shadow-sm overflow-hidden flex flex-col snap-start flex-shrink-0">
-                        <div class="w-full h-48 bg-gray-100 border-b border-gray-200 overflow-hidden">
-                            <img src="image02.jpg" alt="Antenatal Care" class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-6 space-y-3 flex-grow flex flex-col justify-between">
-                            <div>
-                                <h3 class="text-lg font-bold text-brandBlack mb-2">Antenatal Care — BANC Plus</h3>
-                                <p class="text-xs text-gray-600 leading-relaxed">Supporting the health and wellbeing of pregnant women throughout pregnancy with structured maternal care.</p>
+                <!-- Scrolling Ticker Container (Forced Horizontal Row with flex-wrap: nowrap) -->
+                <div class="services-ticker-container relative w-full overflow-hidden py-4">
+                    <div class="animate-autoscroll flex flex-nowrap gap-6">
+                        <!-- Original Set of Services (1 to 5) -->
+                        <div class="min-w-[300px] sm:min-w-[350px] max-w-[350px] bg-white border border-gray-200 shadow-sm overflow-hidden flex flex-col flex-shrink-0">
+                            <div class="w-full h-48 bg-gray-100 border-b border-gray-200 overflow-hidden">
+                                <img src="image02.jpg" alt="Antenatal Care" class="w-full h-full object-cover">
                             </div>
-                            <div class="pt-4">
-                                <a href="#" onclick="navigateTo('services'); return false;" class="text-xs font-bold text-brandNavy hover:underline uppercase tracking-wider">Learn More</a>
+                            <div class="p-6 space-y-3 flex-grow flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-lg font-bold text-brandBlack mb-2">Antenatal Care — BANC Plus</h3>
+                                    <p class="text-xs text-gray-600 leading-relaxed">Supporting the health and wellbeing of pregnant women throughout pregnancy with structured maternal care.</p>
+                                </div>
+                                <div class="pt-4">
+                                    <a href="#" onclick="navigateTo('services'); return false;" class="text-xs font-bold text-brandNavy hover:underline uppercase tracking-wider">Learn More</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Service 2 -->
-                    <div class="min-w-[300px] sm:min-w-[350px] max-w-[350px] bg-white border border-gray-200 shadow-sm overflow-hidden flex flex-col snap-start flex-shrink-0">
-                        <div class="w-full h-48 bg-gray-100 border-b border-gray-200 overflow-hidden">
-                            <img src="image03.jpg" alt="Women's Health" class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-6 space-y-3 flex-grow flex flex-col justify-between">
-                            <div>
-                                <h3 class="text-lg font-bold text-brandBlack mb-2">Women's Health</h3>
-                                <p class="text-xs text-gray-600 leading-relaxed">Addressing healthcare needs specific to women, supporting medical assessment and health maintenance.</p>
+                        <div class="min-w-[300px] sm:min-w-[350px] max-w-[350px] bg-white border border-gray-200 shadow-sm overflow-hidden flex flex-col flex-shrink-0">
+                            <div class="w-full h-48 bg-gray-100 border-b border-gray-200 overflow-hidden">
+                                <img src="image03.jpg" alt="Women's Health" class="w-full h-full object-cover">
                             </div>
-                            <div class="pt-4">
-                                <a href="#" onclick="navigateTo('services'); return false;" class="text-xs font-bold text-brandNavy hover:underline uppercase tracking-wider">Learn More</a>
+                            <div class="p-6 space-y-3 flex-grow flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-lg font-bold text-brandBlack mb-2">Women's Health</h3>
+                                    <p class="text-xs text-gray-600 leading-relaxed">Addressing healthcare needs specific to women, supporting medical assessment and health maintenance.</p>
+                                </div>
+                                <div class="pt-4">
+                                    <a href="#" onclick="navigateTo('services'); return false;" class="text-xs font-bold text-brandNavy hover:underline uppercase tracking-wider">Learn More</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Service 3 -->
-                    <div class="min-w-[300px] sm:min-w-[350px] max-w-[350px] bg-white border border-gray-200 shadow-sm overflow-hidden flex flex-col snap-start flex-shrink-0">
-                        <div class="w-full h-48 bg-gray-100 border-b border-gray-200 overflow-hidden">
-                            <img src="image04.jpg" alt="Family Planning" class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-6 space-y-3 flex-grow flex flex-col justify-between">
-                            <div>
-                                <h3 class="text-lg font-bold text-brandBlack mb-2">Family Planning</h3>
-                                <p class="text-xs text-gray-600 leading-relaxed">Supporting patients in making informed decisions about reproductive health and pregnancy planning.</p>
+                        <div class="min-w-[300px] sm:min-w-[350px] max-w-[350px] bg-white border border-gray-200 shadow-sm overflow-hidden flex flex-col flex-shrink-0">
+                            <div class="w-full h-48 bg-gray-100 border-b border-gray-200 overflow-hidden">
+                                <img src="image04.jpg" alt="Family Planning" class="w-full h-full object-cover">
                             </div>
-                            <div class="pt-4">
-                                <a href="#" onclick="navigateTo('services'); return false;" class="text-xs font-bold text-brandNavy hover:underline uppercase tracking-wider">Learn More</a>
+                            <div class="p-6 space-y-3 flex-grow flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-lg font-bold text-brandBlack mb-2">Family Planning</h3>
+                                    <p class="text-xs text-gray-600 leading-relaxed">Supporting patients in making informed decisions about reproductive health and pregnancy planning.</p>
+                                </div>
+                                <div class="pt-4">
+                                    <a href="#" onclick="navigateTo('services'); return false;" class="text-xs font-bold text-brandNavy hover:underline uppercase tracking-wider">Learn More</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Service 4 -->
-                    <div class="min-w-[300px] sm:min-w-[350px] max-w-[350px] bg-white border border-gray-200 shadow-sm overflow-hidden flex flex-col snap-start flex-shrink-0">
-                        <div class="w-full h-48 bg-gray-100 border-b border-gray-200 overflow-hidden">
-                            <img src="image05.jpg" alt="HIV Testing and Treatment" class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-6 space-y-3 flex-grow flex flex-col justify-between">
-                            <div>
-                                <h3 class="text-lg font-bold text-brandBlack mb-2">HIV Testing and Treatment</h3>
-                                <p class="text-xs text-gray-600 leading-relaxed">Supporting HIV screening, appropriate clinical care, and ongoing treatment management with confidentiality.</p>
+                        <div class="min-w-[300px] sm:min-w-[350px] max-w-[350px] bg-white border border-gray-200 shadow-sm overflow-hidden flex flex-col flex-shrink-0">
+                            <div class="w-full h-48 bg-gray-100 border-b border-gray-200 overflow-hidden">
+                                <img src="image05.jpg" alt="HIV Testing and Treatment" class="w-full h-full object-cover">
                             </div>
-                            <div class="pt-4">
-                                <a href="#" onclick="navigateTo('services'); return false;" class="text-xs font-bold text-brandNavy hover:underline uppercase tracking-wider">Learn More</a>
+                            <div class="p-6 space-y-3 flex-grow flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-lg font-bold text-brandBlack mb-2">HIV Testing and Treatment</h3>
+                                    <p class="text-xs text-gray-600 leading-relaxed">Supporting HIV screening, appropriate clinical care, and ongoing treatment management with confidentiality.</p>
+                                </div>
+                                <div class="pt-4">
+                                    <a href="#" onclick="navigateTo('services'); return false;" class="text-xs font-bold text-brandNavy hover:underline uppercase tracking-wider">Learn More</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Service 5 -->
-                    <div class="min-w-[300px] sm:min-w-[350px] max-w-[350px] bg-white border border-gray-200 shadow-sm overflow-hidden flex flex-col snap-start flex-shrink-0">
-                        <div class="w-full h-48 bg-gray-100 border-b border-gray-200 overflow-hidden">
-                            <img src="image06.jpg" alt="Chronic Disease Management" class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-6 space-y-3 flex-grow flex flex-col justify-between">
-                            <div>
-                                <h3 class="text-lg font-bold text-brandBlack mb-2">Chronic Disease Management</h3>
-                                <p class="text-xs text-gray-600 leading-relaxed">Supporting patients living with long-term medical conditions through assessment and ongoing care.</p>
+                        <div class="min-w-[300px] sm:min-w-[350px] max-w-[350px] bg-white border border-gray-200 shadow-sm overflow-hidden flex flex-col flex-shrink-0">
+                            <div class="w-full h-48 bg-gray-100 border-b border-gray-200 overflow-hidden">
+                                <img src="image06.jpg" alt="Chronic Disease Management" class="w-full h-full object-cover">
                             </div>
-                            <div class="pt-4">
-                                <a href="#" onclick="navigateTo('services'); return false;" class="text-xs font-bold text-brandNavy hover:underline uppercase tracking-wider">Learn More</a>
+                            <div class="p-6 space-y-3 flex-grow flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-lg font-bold text-brandBlack mb-2">Chronic Disease Management</h3>
+                                    <p class="text-xs text-gray-600 leading-relaxed">Supporting patients living with long-term medical conditions through assessment and ongoing care.</p>
+                                </div>
+                                <div class="pt-4">
+                                    <a href="#" onclick="navigateTo('services'); return false;" class="text-xs font-bold text-brandNavy hover:underline uppercase tracking-wider">Learn More</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Cloned Set for Seamless Infinite Loop (Aria-hidden for Accessibility) -->
+                        <div class="min-w-[300px] sm:min-w-[350px] max-w-[350px] bg-white border border-gray-200 shadow-sm overflow-hidden flex flex-col flex-shrink-0" aria-hidden="true">
+                            <div class="w-full h-48 bg-gray-100 border-b border-gray-200 overflow-hidden">
+                                <img src="image02.jpg" alt="" class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-6 space-y-3 flex-grow flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-lg font-bold text-brandBlack mb-2">Antenatal Care — BANC Plus</h3>
+                                    <p class="text-xs text-gray-600 leading-relaxed">Supporting the health and wellbeing of pregnant women throughout pregnancy with structured maternal care.</p>
+                                </div>
+                                <div class="pt-4">
+                                    <a href="#" onclick="navigateTo('services'); return false;" class="text-xs font-bold text-brandNavy hover:underline uppercase tracking-wider">Learn More</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="min-w-[300px] sm:min-w-[350px] max-w-[350px] bg-white border border-gray-200 shadow-sm overflow-hidden flex flex-col flex-shrink-0" aria-hidden="true">
+                            <div class="w-full h-48 bg-gray-100 border-b border-gray-200 overflow-hidden">
+                                <img src="image03.jpg" alt="" class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-6 space-y-3 flex-grow flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-lg font-bold text-brandBlack mb-2">Women's Health</h3>
+                                    <p class="text-xs text-gray-600 leading-relaxed">Addressing healthcare needs specific to women, supporting medical assessment and health maintenance.</p>
+                                </div>
+                                <div class="pt-4">
+                                    <a href="#" onclick="navigateTo('services'); return false;" class="text-xs font-bold text-brandNavy hover:underline uppercase tracking-wider">Learn More</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="min-w-[300px] sm:min-w-[350px] max-w-[350px] bg-white border border-gray-200 shadow-sm overflow-hidden flex flex-col flex-shrink-0" aria-hidden="true">
+                            <div class="w-full h-48 bg-gray-100 border-b border-gray-200 overflow-hidden">
+                                <img src="image04.jpg" alt="" class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-6 space-y-3 flex-grow flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-lg font-bold text-brandBlack mb-2">Family Planning</h3>
+                                    <p class="text-xs text-gray-600 leading-relaxed">Supporting patients in making informed decisions about reproductive health and pregnancy planning.</p>
+                                </div>
+                                <div class="pt-4">
+                                    <a href="#" onclick="navigateTo('services'); return false;" class="text-xs font-bold text-brandNavy hover:underline uppercase tracking-wider">Learn More</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="min-w-[300px] sm:min-w-[350px] max-w-[350px] bg-white border border-gray-200 shadow-sm overflow-hidden flex flex-col flex-shrink-0" aria-hidden="true">
+                            <div class="w-full h-48 bg-gray-100 border-b border-gray-200 overflow-hidden">
+                                <img src="image05.jpg" alt="" class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-6 space-y-3 flex-grow flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-lg font-bold text-brandBlack mb-2">HIV Testing and Treatment</h3>
+                                    <p class="text-xs text-gray-600 leading-relaxed">Supporting HIV screening, appropriate clinical care, and ongoing treatment management with confidentiality.</p>
+                                </div>
+                                <div class="pt-4">
+                                    <a href="#" onclick="navigateTo('services'); return false;" class="text-xs font-bold text-brandNavy hover:underline uppercase tracking-wider">Learn More</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="min-w-[300px] sm:min-w-[350px] max-w-[350px] bg-white border border-gray-200 shadow-sm overflow-hidden flex flex-col flex-shrink-0" aria-hidden="true">
+                            <div class="w-full h-48 bg-gray-100 border-b border-gray-200 overflow-hidden">
+                                <img src="image06.jpg" alt="" class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-6 space-y-3 flex-grow flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-lg font-bold text-brandBlack mb-2">Chronic Disease Management</h3>
+                                    <p class="text-xs text-gray-600 leading-relaxed">Supporting patients living with long-term medical conditions through assessment and ongoing care.</p>
+                                </div>
+                                <div class="pt-4">
+                                    <a href="#" onclick="navigateTo('services'); return false;" class="text-xs font-bold text-brandNavy hover:underline uppercase tracking-wider">Learn More</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -422,7 +521,7 @@
             </section>
         </div>
 
-        <!-- PAGE: OUR DOCTORS / PRACTITIONER -->
+        <!-- PAGE: PRACTITIONER -->
         <div id="page-practitioner" class="page-view hidden">
             <section class="py-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto bg-white text-black space-y-8">
                 <div class="text-center space-y-4">
@@ -489,7 +588,7 @@
             </section>
         </div>
 
-        <!-- PAGE: CONTACT US -->
+        <!-- PAGE: CONTACT US & APPOINTMENT BOOKING FORM -->
         <div id="page-contact" class="page-view hidden">
             <section class="py-16 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto bg-white text-black">
                 <div class="text-center mb-10">
@@ -521,22 +620,68 @@
                         </div>
                     </div>
 
+                    <div class="grid sm:grid-cols-2 gap-6">
+                        <div>
+                            <label for="bookingReason" class="block text-xs uppercase font-semibold tracking-wider text-brandBlack mb-2">Service Desired</label>
+                            <select id="bookingReason" required class="w-full border border-gray-300 bg-white px-4 py-3 text-sm focus:outline-none focus:border-brandNavy transition">
+                                <option value="">Select Service Needed</option>
+                                <option value="Antenatal Care — BANC Plus">Antenatal Care — BANC Plus</option>
+                                <option value="Women's Health Consultation">Women's Health Consultation</option>
+                                <option value="Family Planning">Family Planning</option>
+                                <option value="HIV Testing and Treatment">HIV Testing and Treatment</option>
+                                <option value="Chronic Disease Management">Chronic Disease Management</option>
+                                <option value="General Medical Consultation">General Medical Consultation</option>
+                                <option value="Preventive Healthcare">Preventive Healthcare</option>
+                                <option value="Minor Procedures">Minor Procedures</option>
+                                <option value="Ultrasound">Ultrasound</option>
+                                <option value="Medical Tests">Medical Tests</option>
+                                <option value="Emergency Care Inquiry">Emergency Care Inquiry</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="isFirstVisit" class="block text-xs uppercase font-semibold tracking-wider text-brandBlack mb-2">Is this your first visit?</label>
+                            <select id="isFirstVisit" required class="w-full border border-gray-300 bg-white px-4 py-3 text-sm focus:outline-none focus:border-brandNavy transition">
+                                <option value="">Select Option</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                    </div>
+
                     <div>
-                        <label for="bookingReason" class="block text-xs uppercase font-semibold tracking-wider text-brandBlack mb-2">Service Desired</label>
-                        <select id="bookingReason" required class="w-full border border-gray-300 bg-white px-4 py-3 text-sm focus:outline-none focus:border-brandNavy transition mb-2">
-                            <option value="">Select Service Needed</option>
-                            <option value="Antenatal Care — BANC Plus">Antenatal Care — BANC Plus</option>
-                            <option value="Women's Health Consultation">Women's Health Consultation</option>
-                            <option value="Family Planning">Family Planning</option>
-                            <option value="HIV Testing and Treatment">HIV Testing and Treatment</option>
-                            <option value="Chronic Disease Management">Chronic Disease Management</option>
-                            <option value="General Medical Consultation">General Medical Consultation</option>
-                            <option value="Preventive Healthcare">Preventive Healthcare</option>
-                            <option value="Minor Procedures">Minor Procedures</option>
-                            <option value="Ultrasound">Ultrasound</option>
-                            <option value="Medical Tests">Medical Tests</option>
-                            <option value="Emergency Care Inquiry">Emergency Care Inquiry</option>
+                        <label for="patientAgeRange" class="block text-xs uppercase font-semibold tracking-wider text-brandBlack mb-2">Patient Age Range</label>
+                        <select id="patientAgeRange" required onchange="handleAgeRangeChange()" class="w-full border border-gray-300 bg-white px-4 py-3 text-sm focus:outline-none focus:border-brandNavy transition">
+                            <option value="">Select Age Range</option>
+                            <option value="0–5 years">0–5 years</option>
+                            <option value="6–12 years">6–12 years</option>
+                            <option value="13–17 years">13–17 years</option>
+                            <option value="18+ years">18+ years</option>
                         </select>
+                    </div>
+
+                    <!-- CONDITIONAL FIELDS FOR PATIENTS UNDER 18 -->
+                    <div id="under18Fields" class="space-y-6 p-4 bg-gray-50 border border-gray-200 hidden">
+                        <div>
+                            <label for="childFullName" class="block text-xs uppercase font-semibold tracking-wider text-brandBlack mb-2">Child's Full Name</label>
+                            <input type="text" id="childFullName" maxlength="100" class="w-full border border-gray-300 bg-white px-4 py-3 text-sm focus:outline-none focus:border-brandNavy transition">
+                        </div>
+                        <div>
+                            <label for="relationshipToChild" class="block text-xs uppercase font-semibold tracking-wider text-brandBlack mb-2">Your Relationship to the Child</label>
+                            <select id="relationshipToChild" onchange="handleRelationshipChange()" class="w-full border border-gray-300 bg-white px-4 py-3 text-sm focus:outline-none focus:border-brandNavy transition">
+                                <option value="">Select Relationship</option>
+                                <option value="Parent">Parent</option>
+                                <option value="Guardian">Guardian</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div id="relationshipOtherContainer" class="hidden">
+                            <label for="relationshipOtherText" class="block text-xs uppercase font-semibold tracking-wider text-brandBlack mb-2">Please Specify Relationship</label>
+                            <input type="text" id="relationshipOtherText" maxlength="60" class="w-full border border-gray-300 bg-white px-4 py-3 text-sm focus:outline-none focus:border-brandNavy transition">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="bookingNotes" class="block text-xs uppercase font-semibold tracking-wider text-brandBlack mb-2">Additional Notes / Preferred Time</label>
                         <textarea id="bookingNotes" rows="3" placeholder="Provide any specific details or preferred appointment time..." class="w-full border border-gray-300 bg-white px-4 py-3 text-sm focus:outline-none focus:border-brandNavy transition"></textarea>
                     </div>
 
@@ -595,8 +740,8 @@
                 <div class="flex gap-6">
                     <a href="#" onclick="navigateTo('home'); return false;" class="hover:text-brandYellow transition">Home</a>
                     <a href="#" onclick="navigateTo('about'); return false;" class="hover:text-brandYellow transition">About Us</a>
-                    <a href="#" onclick="navigateTo('services'); return false;" class="hover:text-brandYellow transition">Medical Services</a>
-                    <a href="#" onclick="navigateTo('practitioner'); return false;" class="hover:text-brandYellow transition">Our Doctors</a>
+                    <a href="#" onclick="navigateTo('services'); return false;" class="hover:text-brandYellow transition">Services</a>
+                    <a href="#" onclick="navigateTo('practitioner'); return false;" class="hover:text-brandYellow transition">Practitioner</a>
                     <a href="#" onclick="navigateTo('patient-info'); return false;" class="hover:text-brandYellow transition">Patient Info</a>
                     <a href="#" onclick="navigateTo('contact'); return false;" class="hover:text-brandYellow transition">Contact Us</a>
                 </div>
@@ -605,11 +750,42 @@
     </footer>
 
     <script>
-        function scrollCarousel(direction) {
-            const container = document.getElementById('servicesCarousel');
-            if (container) {
-                const scrollAmount = 370 * direction;
-                container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        function handleAgeRangeChange() {
+            const ageRange = document.getElementById('patientAgeRange').value;
+            const under18Container = document.getElementById('under18Fields');
+            const childFullNameInput = document.getElementById('childFullName');
+            const relationshipSelect = document.getElementById('relationshipToChild');
+            const otherContainer = document.getElementById('relationshipOtherContainer');
+            const otherTextInput = document.getElementById('relationshipOtherText');
+
+            if (ageRange === '0–5 years' || ageRange === '6–12 years' || ageRange === '13–17 years') {
+                under18Container.classList.remove('hidden');
+                childFullNameInput.setAttribute('required', 'required');
+                relationshipSelect.setAttribute('required', 'required');
+            } else {
+                under18Container.classList.add('hidden');
+                childFullNameInput.removeAttribute('required');
+                relationshipSelect.removeAttribute('required');
+                otherContainer.classList.add('hidden');
+                otherTextInput.removeAttribute('required');
+                childFullNameInput.value = '';
+                relationshipSelect.value = '';
+                otherTextInput.value = '';
+            }
+        }
+
+        function handleRelationshipChange() {
+            const relationship = document.getElementById('relationshipToChild').value;
+            const otherContainer = document.getElementById('relationshipOtherContainer');
+            const otherTextInput = document.getElementById('relationshipOtherText');
+
+            if (relationship === 'Other') {
+                otherContainer.classList.remove('hidden');
+                otherTextInput.setAttribute('required', 'required');
+            } else {
+                otherContainer.classList.add('hidden');
+                otherTextInput.removeAttribute('required');
+                otherTextInput.value = '';
             }
         }
 
@@ -640,7 +816,7 @@
                 'home': 'Protea Care Medical (Pty) Ltd | Dr M Kazadi | Centurion',
                 'about': 'About Us | Protea Care Medical | Centurion',
                 'services': 'Our Medical Services | Protea Care Medical | Centurion',
-                'practitioner': 'Our Doctors | Dr M Kazadi | Centurion',
+                'practitioner': 'Practitioner Profile | Dr M Kazadi | Centurion',
                 'patient-info': 'Patient Information | Protea Care Medical | Centurion',
                 'contact': 'Contact Us & Book | Protea Care Medical | Centurion'
             };
@@ -681,6 +857,8 @@
                     const phone = document.getElementById('patientPhone').value.trim();
                     const email = document.getElementById('patientEmail').value.trim();
                     const reason = document.getElementById('bookingReason').value;
+                    const isFirstVisit = document.getElementById('isFirstVisit').value;
+                    const ageRange = document.getElementById('patientAgeRange').value;
                     const notes = document.getElementById('bookingNotes').value.trim();
 
                     let message = `Hello Protea Care Medical,\n\n`;
@@ -689,6 +867,19 @@
                     message += `• Contact: ${phone}\n`;
                     message += `• Email: ${email}\n`;
                     message += `• Service Desired: ${reason}\n`;
+                    message += `• First Visit: ${isFirstVisit}\n`;
+                    message += `• Patient Age Range: ${ageRange}\n`;
+
+                    if (ageRange !== '18+ years') {
+                        const childName = document.getElementById('childFullName').value.trim();
+                        let relationship = document.getElementById('relationshipToChild').value;
+                        if (relationship === 'Other') {
+                            relationship += ` (${document.getElementById('relationshipOtherText').value.trim()})`;
+                        }
+                        message += `• Child's Full Name: ${childName}\n`;
+                        message += `• Relationship to Child: ${relationship}\n`;
+                    }
+
                     if (notes) {
                         message += `• Additional Notes: ${notes}\n`;
                     }
