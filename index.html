@@ -51,7 +51,7 @@
         /* Automatic Seamless Scrolling Animation for Homepage Services (Horizontal Row, No Stacking) */
         @keyframes autoScroll {
             0% { transform: translateX(0); }
-            100% { transform: translateX(calc(-374px * 5)); }
+            100% { transform: translateX(calc(-350px * 5 - 24px * 5)); }
         }
         .animate-autoscroll {
             display: flex;
@@ -179,7 +179,7 @@
                 <!-- Scrolling Ticker Container (Forced Horizontal Row with flex-wrap: nowrap) -->
                 <div class="services-ticker-container relative w-full overflow-hidden py-4">
                     <div class="animate-autoscroll flex flex-nowrap gap-6">
-                        <!-- Original Set of Services (1 to 5)[cite: 1] -->
+                        <!-- Original Set of Services (1 to 5) -->
                         <div class="min-w-[300px] sm:min-w-[350px] max-w-[350px] bg-white border border-gray-200 shadow-sm overflow-hidden flex flex-col flex-shrink-0">
                             <div class="w-full h-48 bg-gray-100 border-b border-gray-200 overflow-hidden">
                                 <img src="image02.jpg" alt="Antenatal Care" class="w-full h-full object-cover">
@@ -255,7 +255,7 @@
                             </div>
                         </div>
 
-                        <!-- Cloned Set for Seamless Infinite Loop (Aria-hidden for Accessibility)[cite: 1] -->
+                        <!-- Cloned Set for Seamless Infinite Loop (Aria-hidden for Accessibility) -->
                         <div class="min-w-[300px] sm:min-w-[350px] max-w-[350px] bg-white border border-gray-200 shadow-sm overflow-hidden flex flex-col flex-shrink-0" aria-hidden="true">
                             <div class="w-full h-48 bg-gray-100 border-b border-gray-200 overflow-hidden">
                                 <img src="image02.jpg" alt="" class="w-full h-full object-cover">
@@ -870,7 +870,7 @@
                     message += `• First Visit: ${isFirstVisit}\n`;
                     message += `• Patient Age Range: ${ageRange}\n`;
 
-dl                    if (ageRange !== '18+ years') {
+                    if (ageRange !== '18+ years') {
                         const childName = document.getElementById('childFullName').value.trim();
                         let relationship = document.getElementById('relationshipToChild').value;
                         if (relationship === 'Other') {
