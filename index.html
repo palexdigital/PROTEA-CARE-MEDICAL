@@ -48,16 +48,16 @@
         html { scroll-behavior: smooth; }
         body { background-color: #FFFFFF; color: #000000; font-family: 'DM Sans', Arial, sans-serif; }
         
-        /* Automatic Seamless Scrolling Animation for Homepage Services (Horizontal Row, No Stacking) */
-        @keyframes autoScroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(calc(-350px * 5 - 24px * 5)); }
+        /* Automatic Seamless Scrolling Animation for Homepage Services (Horizontal Row, Left-to-Right Movement) */
+        @keyframes autoScrollRight {
+            0% { transform: translateX(calc(-350px * 5 - 24px * 5)); }
+            100% { transform: translateX(0); }
         }
         .animate-autoscroll {
             display: flex;
             flex-wrap: nowrap;
             width: max-content;
-            animation: autoScroll 35s linear infinite;
+            animation: autoScrollRight 35s linear infinite;
         }
         .services-ticker-container:hover .animate-autoscroll {
             animation-play-state: paused;
@@ -77,9 +77,7 @@
     <header class="sticky top-0 bg-brandNavy border-b border-white/10 z-50 text-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-24 flex items-center justify-between">
             <a href="#" onclick="navigateTo('home'); return false;" class="flex items-center gap-4">
-                <div class="w-12 h-12 rounded-full border border-white/20 bg-white flex items-center justify-center overflow-hidden flex-shrink-0 p-1">
-                    <img src="logo.png" alt="Protea Care Medical Logo" class="w-full h-full object-contain">
-                </div>
+                <img src="logo.png" alt="Protea Care Medical Logo" class="h-12 w-auto object-contain flex-shrink-0">
                 <div class="flex flex-col">
                     <span class="text-lg sm:text-xl tracking-wider font-bold uppercase text-white leading-tight">Protea Care Medical</span>
                     <span class="text-[10px] sm:text-xs tracking-[0.25em] font-light text-brandYellow uppercase">Dr M Kazadi</span>
@@ -162,7 +160,7 @@
                 </div>
             </section>
 
-            <!-- Services Section with Single Horizontal Row & Automatic Scrolling -->
+            <!-- Services Section with Single Horizontal Row & Automatic Scrolling (Left to Right) -->
             <section class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
                 <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
                     <div>
@@ -176,85 +174,9 @@
                     </div>
                 </div>
 
-                <!-- Scrolling Ticker Container (Forced Horizontal Row with flex-wrap: nowrap) -->
+                <!-- Scrolling Ticker Container (Forced Horizontal Row with flex-wrap: nowrap, Left-to-Right) -->
                 <div class="services-ticker-container relative w-full overflow-hidden py-4">
                     <div class="animate-autoscroll flex flex-nowrap gap-6">
-                        <!-- Original Set of Services (1 to 5) -->
-                        <div class="min-w-[300px] sm:min-w-[350px] max-w-[350px] bg-white border border-gray-200 shadow-sm overflow-hidden flex flex-col flex-shrink-0">
-                            <div class="w-full h-48 bg-gray-100 border-b border-gray-200 overflow-hidden">
-                                <img src="image02.jpg" alt="Antenatal Care" class="w-full h-full object-cover">
-                            </div>
-                            <div class="p-6 space-y-3 flex-grow flex flex-col justify-between">
-                                <div>
-                                    <h3 class="text-lg font-bold text-brandBlack mb-2">Antenatal Care — BANC Plus</h3>
-                                    <p class="text-xs text-gray-600 leading-relaxed">Supporting the health and wellbeing of pregnant women throughout pregnancy with structured maternal care.</p>
-                                </div>
-                                <div class="pt-4">
-                                    <a href="#" onclick="navigateTo('services'); return false;" class="text-xs font-bold text-brandNavy hover:underline uppercase tracking-wider">Learn More</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="min-w-[300px] sm:min-w-[350px] max-w-[350px] bg-white border border-gray-200 shadow-sm overflow-hidden flex flex-col flex-shrink-0">
-                            <div class="w-full h-48 bg-gray-100 border-b border-gray-200 overflow-hidden">
-                                <img src="image03.jpg" alt="Women's Health" class="w-full h-full object-cover">
-                            </div>
-                            <div class="p-6 space-y-3 flex-grow flex flex-col justify-between">
-                                <div>
-                                    <h3 class="text-lg font-bold text-brandBlack mb-2">Women's Health</h3>
-                                    <p class="text-xs text-gray-600 leading-relaxed">Addressing healthcare needs specific to women, supporting medical assessment and health maintenance.</p>
-                                </div>
-                                <div class="pt-4">
-                                    <a href="#" onclick="navigateTo('services'); return false;" class="text-xs font-bold text-brandNavy hover:underline uppercase tracking-wider">Learn More</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="min-w-[300px] sm:min-w-[350px] max-w-[350px] bg-white border border-gray-200 shadow-sm overflow-hidden flex flex-col flex-shrink-0">
-                            <div class="w-full h-48 bg-gray-100 border-b border-gray-200 overflow-hidden">
-                                <img src="image04.jpg" alt="Family Planning" class="w-full h-full object-cover">
-                            </div>
-                            <div class="p-6 space-y-3 flex-grow flex flex-col justify-between">
-                                <div>
-                                    <h3 class="text-lg font-bold text-brandBlack mb-2">Family Planning</h3>
-                                    <p class="text-xs text-gray-600 leading-relaxed">Supporting patients in making informed decisions about reproductive health and pregnancy planning.</p>
-                                </div>
-                                <div class="pt-4">
-                                    <a href="#" onclick="navigateTo('services'); return false;" class="text-xs font-bold text-brandNavy hover:underline uppercase tracking-wider">Learn More</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="min-w-[300px] sm:min-w-[350px] max-w-[350px] bg-white border border-gray-200 shadow-sm overflow-hidden flex flex-col flex-shrink-0">
-                            <div class="w-full h-48 bg-gray-100 border-b border-gray-200 overflow-hidden">
-                                <img src="image05.jpg" alt="HIV Testing and Treatment" class="w-full h-full object-cover">
-                            </div>
-                            <div class="p-6 space-y-3 flex-grow flex flex-col justify-between">
-                                <div>
-                                    <h3 class="text-lg font-bold text-brandBlack mb-2">HIV Testing and Treatment</h3>
-                                    <p class="text-xs text-gray-600 leading-relaxed">Supporting HIV screening, appropriate clinical care, and ongoing treatment management with confidentiality.</p>
-                                </div>
-                                <div class="pt-4">
-                                    <a href="#" onclick="navigateTo('services'); return false;" class="text-xs font-bold text-brandNavy hover:underline uppercase tracking-wider">Learn More</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="min-w-[300px] sm:min-w-[350px] max-w-[350px] bg-white border border-gray-200 shadow-sm overflow-hidden flex flex-col flex-shrink-0">
-                            <div class="w-full h-48 bg-gray-100 border-b border-gray-200 overflow-hidden">
-                                <img src="image06.jpg" alt="Chronic Disease Management" class="w-full h-full object-cover">
-                            </div>
-                            <div class="p-6 space-y-3 flex-grow flex flex-col justify-between">
-                                <div>
-                                    <h3 class="text-lg font-bold text-brandBlack mb-2">Chronic Disease Management</h3>
-                                    <p class="text-xs text-gray-600 leading-relaxed">Supporting patients living with long-term medical conditions through assessment and ongoing care.</p>
-                                </div>
-                                <div class="pt-4">
-                                    <a href="#" onclick="navigateTo('services'); return false;" class="text-xs font-bold text-brandNavy hover:underline uppercase tracking-wider">Learn More</a>
-                                </div>
-                            </div>
-                        </div>
-
                         <!-- Cloned Set for Seamless Infinite Loop (Aria-hidden for Accessibility) -->
                         <div class="min-w-[300px] sm:min-w-[350px] max-w-[350px] bg-white border border-gray-200 shadow-sm overflow-hidden flex flex-col flex-shrink-0" aria-hidden="true">
                             <div class="w-full h-48 bg-gray-100 border-b border-gray-200 overflow-hidden">
@@ -319,6 +241,82 @@
                         <div class="min-w-[300px] sm:min-w-[350px] max-w-[350px] bg-white border border-gray-200 shadow-sm overflow-hidden flex flex-col flex-shrink-0" aria-hidden="true">
                             <div class="w-full h-48 bg-gray-100 border-b border-gray-200 overflow-hidden">
                                 <img src="image06.jpg" alt="" class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-6 space-y-3 flex-grow flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-lg font-bold text-brandBlack mb-2">Chronic Disease Management</h3>
+                                    <p class="text-xs text-gray-600 leading-relaxed">Supporting patients living with long-term medical conditions through assessment and ongoing care.</p>
+                                </div>
+                                <div class="pt-4">
+                                    <a href="#" onclick="navigateTo('services'); return false;" class="text-xs font-bold text-brandNavy hover:underline uppercase tracking-wider">Learn More</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Original Set of Services (1 to 5) -->
+                        <div class="min-w-[300px] sm:min-w-[350px] max-w-[350px] bg-white border border-gray-200 shadow-sm overflow-hidden flex flex-col flex-shrink-0">
+                            <div class="w-full h-48 bg-gray-100 border-b border-gray-200 overflow-hidden">
+                                <img src="image02.jpg" alt="Antenatal Care" class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-6 space-y-3 flex-grow flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-lg font-bold text-brandBlack mb-2">Antenatal Care — BANC Plus</h3>
+                                    <p class="text-xs text-gray-600 leading-relaxed">Supporting the health and wellbeing of pregnant women throughout pregnancy with structured maternal care.</p>
+                                </div>
+                                <div class="pt-4">
+                                    <a href="#" onclick="navigateTo('services'); return false;" class="text-xs font-bold text-brandNavy hover:underline uppercase tracking-wider">Learn More</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="min-w-[300px] sm:min-w-[350px] max-w-[350px] bg-white border border-gray-200 shadow-sm overflow-hidden flex flex-col flex-shrink-0">
+                            <div class="w-full h-48 bg-gray-100 border-b border-gray-200 overflow-hidden">
+                                <img src="image03.jpg" alt="Women's Health" class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-6 space-y-3 flex-grow flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-lg font-bold text-brandBlack mb-2">Women's Health</h3>
+                                    <p class="text-xs text-gray-600 leading-relaxed">Addressing healthcare needs specific to women, supporting medical assessment and health maintenance.</p>
+                                </div>
+                                <div class="pt-4">
+                                    <a href="#" onclick="navigateTo('services'); return false;" class="text-xs font-bold text-brandNavy hover:underline uppercase tracking-wider">Learn More</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="min-w-[300px] sm:min-w-[350px] max-w-[350px] bg-white border border-gray-200 shadow-sm overflow-hidden flex flex-col flex-shrink-0">
+                            <div class="w-full h-48 bg-gray-100 border-b border-gray-200 overflow-hidden">
+                                <img src="image04.jpg" alt="Family Planning" class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-6 space-y-3 flex-grow flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-lg font-bold text-brandBlack mb-2">Family Planning</h3>
+                                    <p class="text-xs text-gray-600 leading-relaxed">Supporting patients in making informed decisions about reproductive health and pregnancy planning.</p>
+                                </div>
+                                <div class="pt-4">
+                                    <a href="#" onclick="navigateTo('services'); return false;" class="text-xs font-bold text-brandNavy hover:underline uppercase tracking-wider">Learn More</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="min-w-[300px] sm:min-w-[350px] max-w-[350px] bg-white border border-gray-200 shadow-sm overflow-hidden flex flex-col flex-shrink-0">
+                            <div class="w-full h-48 bg-gray-100 border-b border-gray-200 overflow-hidden">
+                                <img src="image05.jpg" alt="HIV Testing and Treatment" class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-6 space-y-3 flex-grow flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-lg font-bold text-brandBlack mb-2">HIV Testing and Treatment</h3>
+                                    <p class="text-xs text-gray-600 leading-relaxed">Supporting HIV screening, appropriate clinical care, and ongoing treatment management with confidentiality.</p>
+                                </div>
+                                <div class="pt-4">
+                                    <a href="#" onclick="navigateTo('services'); return false;" class="text-xs font-bold text-brandNavy hover:underline uppercase tracking-wider">Learn More</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="min-w-[300px] sm:min-w-[350px] max-w-[350px] bg-white border border-gray-200 shadow-sm overflow-hidden flex flex-col flex-shrink-0">
+                            <div class="w-full h-48 bg-gray-100 border-b border-gray-200 overflow-hidden">
+                                <img src="image06.jpg" alt="Chronic Disease Management" class="w-full h-full object-cover">
                             </div>
                             <div class="p-6 space-y-3 flex-grow flex flex-col justify-between">
                                 <div>
