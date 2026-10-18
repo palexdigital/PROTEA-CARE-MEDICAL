@@ -46,18 +46,18 @@
 
     <style>
         html { scroll-behavior: smooth; }
-        body { background-color: #FFFFFF; color: #000000; font-family: 'DM Sans', Arial, sans-serif; }
+        body { background-color: #FFFFFF; color: #000000; font-family: 'DM Sans', Arial, sans-serif; overflow-x: hidden; }
     </style>
 </head>
 <body class="antialiased selection:bg-brandYellow selection:text-brandBlack flex flex-col min-h-screen">
 
     <header class="sticky top-0 bg-brandNavy border-b border-white/10 z-50 text-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-24 flex items-center justify-between">
-            <a href="#" onclick="navigateTo('home'); return false;" class="flex items-center gap-4">
-                <img src="logo.png" alt="Protea Care Medical Logo" class="h-12 w-auto object-contain flex-shrink-0">
-                <div class="flex flex-col">
-                    <span class="text-lg sm:text-xl tracking-wider font-bold uppercase text-white leading-tight">Protea Care Medical</span>
-                    <span class="text-[10px] sm:text-xs tracking-[0.25em] font-light text-brandYellow uppercase">Dr M Kazadi</span>
+            <a href="#" onclick="navigateTo('home'); return false;" class="flex items-center gap-3 sm:gap-4 min-w-0">
+                <img src="logo.png" alt="Protea Care Medical Logo" class="h-10 sm:h-12 w-auto object-contain flex-shrink-0">
+                <div class="flex flex-col min-w-0">
+                    <span class="text-base sm:text-xl tracking-wider font-bold uppercase text-white leading-tight truncate">Protea Care Medical</span>
+                    <span class="text-[9px] sm:text-xs tracking-[0.25em] font-light text-brandYellow uppercase truncate">Dr M Kazadi</span>
                 </div>
             </a>
             
@@ -70,12 +70,31 @@
                 <a href="#" onclick="navigateTo('contact'); return false;" id="nav-contact" class="transition">Contact Us</a>
             </nav>
 
-            <div class="flex items-center gap-4">
-                <a href="#" onclick="navigateTo('contact'); return false;" class="hidden sm:inline-block bg-brandYellow text-brandBlack hover:bg-brandYellow/90 px-4 py-2 text-xs font-semibold uppercase tracking-widest transition">
+            <div class="flex items-center gap-3">
+                <a href="#" onclick="navigateTo('contact'); return false;" class="hidden sm:inline-block bg-brandYellow text-brandBlack hover:bg-brandYellow/90 px-4 py-2 text-xs font-semibold uppercase tracking-widest transition flex-shrink-0">
                     Book an Appointment
                 </a>
-                <a href="tel:0126431191" aria-label="Call 012 643 1191" class="w-11 h-11 rounded-full bg-brandNavy hover:bg-brandNavy/80 border border-brandYellow text-brandYellow flex items-center justify-center transition shadow-sm" title="Call 012 643 1191">
-                    <i data-lucide="phone" class="w-5 h-5"></i>
+                <a href="tel:0126431191" aria-label="Call 012 643 1191" class="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-brandNavy hover:bg-brandNavy/80 border border-brandYellow text-brandYellow flex items-center justify-center transition shadow-sm flex-shrink-0" title="Call 012 643 1191">
+                    <i data-lucide="phone" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                </a>
+                <!-- Mobile Menu Toggle Button -->
+                <button id="mobileMenuButton" onclick="toggleMobileMenu()" aria-label="Toggle Navigation Menu" class="lg:hidden w-10 h-10 rounded-full bg-brandNavy hover:bg-brandNavy/80 border border-brandYellow text-brandYellow flex items-center justify-center transition shadow-sm flex-shrink-0">
+                    <i data-lucide="menu" id="mobileMenuIcon" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Drawer / Menu -->
+        <div id="mobileMenu" class="lg:hidden hidden bg-brandNavy border-t border-white/10 px-6 py-6 space-y-4 text-xs font-semibold uppercase tracking-widest text-white">
+            <a href="#" onclick="navigateTo('home'); toggleMobileMenu(); return false;" id="mob-nav-home" class="block py-2 border-b border-white/5 transition">Home</a>
+            <a href="#" onclick="navigateTo('about'); toggleMobileMenu(); return false;" id="mob-nav-about" class="block py-2 border-b border-white/5 transition">About Us</a>
+            <a href="#" onclick="navigateTo('services'); toggleMobileMenu(); return false;" id="mob-nav-services" class="block py-2 border-b border-white/5 transition">Services</a>
+            <a href="#" onclick="navigateTo('practitioner'); toggleMobileMenu(); return false;" id="mob-nav-practitioner" class="block py-2 border-b border-white/5 transition">Practitioner</a>
+            <a href="#" onclick="navigateTo('patient-info'); toggleMobileMenu(); return false;" id="mob-nav-patient-info" class="block py-2 border-b border-white/5 transition">Patient Info</a>
+            <a href="#" onclick="navigateTo('contact'); toggleMobileMenu(); return false;" id="mob-nav-contact" class="block py-2 border-b border-white/5 transition">Contact Us</a>
+            <div class="pt-2">
+                <a href="#" onclick="navigateTo('contact'); toggleMobileMenu(); return false;" class="block text-center bg-brandYellow text-brandBlack hover:bg-brandYellow/90 px-4 py-3 text-xs font-semibold uppercase tracking-widest transition">
+                    Book an Appointment
                 </a>
             </div>
         </div>
@@ -88,8 +107,8 @@
         <div id="page-home" class="page-view">
             <!-- Hero Section with hero1.jpg Background Overlay -->
             <section class="relative py-20 lg:py-32 px-4 sm:px-6 lg:px-8 bg-brandNavy text-white overflow-hidden">
-                <div class="absolute inset-0 bg-cover bg-center opacity-20 mix-blend-overlay" style="background-image: url('hero1.jpg');"></div>
-                <div class="absolute inset-0 bg-gradient-to-r from-brandNavy/80 via-brandNavy/65 to-brandNavy/50"></div>
+                <div class="absolute inset-0 bg-cover bg-center opacity-25 mix-blend-overlay" style="background-image: url('hero1.jpg');"></div>
+                <div class="absolute inset-0 bg-gradient-to-r from-brandNavy/70 via-brandNavy/55 to-brandNavy/40"></div>
                 
                 <div class="max-w-7xl mx-auto relative z-10">
                     <div class="grid lg:grid-cols-12 gap-12 items-center">
@@ -630,14 +649,14 @@
     </main>
 
     <footer class="bg-brandNavy text-gray-300 text-xs py-12 border-t border-white/10 px-4 sm:px-6 lg:px-8 mt-auto">
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
             <div class="flex flex-col items-center sm:items-start gap-1">
                 <p class="text-sm tracking-wider font-bold uppercase text-white">PROTEA CARE MEDICAL (PTY) LTD</p>
                 <p class="text-[10px] uppercase text-gray-400 tracking-widest">© 2026. All rights reserved.</p>
             </div>
             
             <div class="flex flex-col sm:flex-row items-center gap-6 text-gray-300">
-                <div class="flex gap-6">
+                <div class="flex flex-wrap justify-center gap-6">
                     <a href="#" onclick="navigateTo('home'); return false;" class="hover:text-brandYellow transition">Home</a>
                     <a href="#" onclick="navigateTo('about'); return false;" class="hover:text-brandYellow transition">About Us</a>
                     <a href="#" onclick="navigateTo('services'); return false;" class="hover:text-brandYellow transition">Services</a>
@@ -650,6 +669,19 @@
     </footer>
 
     <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const icon = document.getElementById('mobileMenuIcon');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                icon.setAttribute('data-lucide', 'x');
+            } else {
+                menu.classList.add('hidden');
+                icon.setAttribute('data-lucide', 'menu');
+            }
+            lucide.createIcons();
+        }
+
         function handleAgeRangeChange() {
             const ageRange = document.getElementById('patientAgeRange').value;
             const under18Container = document.getElementById('under18Fields');
@@ -701,7 +733,7 @@
                 pageId = 'home';
             }
 
-            // Update active states on nav
+            // Update active states on desktop nav
             const navLinks = document.querySelectorAll('header nav a');
             navLinks.forEach(link => {
                 link.classList.remove('text-brandYellow', 'font-bold');
@@ -709,6 +741,16 @@
             const activeNav = document.getElementById('nav-' + pageId);
             if (activeNav) {
                 activeNav.classList.add('text-brandYellow', 'font-bold');
+            }
+
+            // Update active states on mobile nav
+            const mobNavLinks = document.querySelectorAll('#mobileMenu a[id^="mob-nav-"]');
+            mobNavLinks.forEach(link => {
+                link.classList.remove('text-brandYellow', 'font-bold');
+            });
+            const activeMobNav = document.getElementById('mob-nav-' + pageId);
+            if (activeMobNav) {
+                activeMobNav.classList.add('text-brandYellow', 'font-bold');
             }
 
             // Update Page Titles & URL hash
