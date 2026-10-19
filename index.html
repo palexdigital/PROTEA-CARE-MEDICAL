@@ -830,12 +830,22 @@
                         const response = await fetch('/api/submit-appointment', {
                             method: 'POST',
                             headers: {
-                                'Content-Type': 'application/json'
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
                             },
                             body: JSON.stringify(formData)
                         });
 
-                        const result = await response.json();
+                        // Robust response parsing to avoid "Unexpected end of JSON input"
+                        let result;
+                        const contentType = response.headers.get('content-type');
+                        if (contentType && contentType.includes('application/json')) {
+                            const text = await response.text();
+                            result = text ? JSON.parse(text) : {};
+                        } else {
+                            const text = await response.text();
+                            result = { error: text || `Server returned HTTP ${response.status}` };
+                        }
 
                         if (response.ok && result.success) {
                             feedbackDiv.className = 'p-4 mb-4 text-xs font-semibold uppercase tracking-wider text-center bg-green-50 text-green-800 border border-green-200';
@@ -846,7 +856,7 @@
                             const under18Container = document.getElementById('under18Fields');
                             if (under18Container) under18Container.classList.add('hidden');
                         } else {
-                            throw new Error(result.error || 'Server failed to process submission.');
+                            throw new Error(result.error || `Request failed with status ${response.status}`);
                         }
                     } catch (error) {
                         feedbackDiv.className = 'p-4 mb-4 text-xs font-semibold uppercase tracking-wider text-center bg-red-50 text-red-800 border border-red-200';
