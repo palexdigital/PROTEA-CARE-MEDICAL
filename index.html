@@ -791,42 +791,72 @@
 
             const appointmentForm = document.getElementById('secureAppointmentForm');
             if (appointmentForm) {
-                appointmentForm.addEventListener('submit', function(e) {
+                let feedbackDiv = document.getElementById('formFeedbackMessage');
+                if (!feedbackDiv) {
+                    feedbackDiv = document.createElement('div');
+                    feedbackDiv.id = 'formFeedbackMessage';
+                    feedbackDiv.className = 'hidden p-4 mb-4 text-xs font-semibold uppercase tracking-wider text-center';
+                    appointmentForm.parentNode.insertBefore(feedbackDiv, appointmentForm);
+                }
+
+                appointmentForm.addEventListener('submit', async function(e) {
                     e.preventDefault();
                     
-                    const firstName = document.getElementById('firstName').value.trim();
-                    const lastName = document.getElementById('lastName').value.trim();
-                    const phone = document.getElementById('patientPhone').value.trim();
-                    const email = document.getElementById('patientEmail').value.trim();
-                    const reason = document.getElementById('bookingReason').value;
-                    const isFirstVisit = document.getElementById('isFirstVisit').value;
-                    const ageRange = document.getElementById('patientAgeRange').value;
-                    const notes = document.getElementById('bookingNotes').value.trim();
+                    feedbackDiv.classList.add('hidden');
+                    feedbackDiv.textContent = '';
 
-                    let message = `Hello Protea Care Medical,\n\n`;
-                    message += `I would like to request an appointment/consultation with the following details:\n\n`;
-                    message += `• Name: ${firstName} ${lastName}\n`;
-                    message += `• Contact: ${phone}\n`;
-                    message += `• Email: ${email}\n`;
-                    message += `• Service Desired: ${reason}\n`;
-                    message += `• First Visit: ${isFirstVisit}\n`;
-                    message += `• Patient Age Range: ${ageRange}\n`;
+                    const formData = {
+                        firstName: document.getElementById('firstName').value.trim(),
+                        lastName: document.getElementById('lastName').value.trim(),
+                        phone: document.getElementById('patientPhone').value.trim(),
+                        email: document.getElementById('patientEmail').value.trim(),
+                        service: document.getElementById('bookingReason').value,
+                        isFirstVisit: document.getElementById('isFirstVisit').value,
+                        ageRange: document.getElementById('patientAgeRange').value,
+                        childFullName: document.getElementById('childFullName') ? document.getElementById('childFullName').value.trim() : 'Not provided',
+                        relationshipToChild: document.getElementById('relationshipToChild') ? document.getElementById('relationshipToChild').value : 'Not provided',
+                        relationshipOtherText: document.getElementById('relationshipOtherText') ? document.getElementById('relationshipOtherText').value.trim() : '',
+                        notes: document.getElementById('bookingNotes').value.trim() || 'Not provided'
+                    };
 
-                    if (ageRange !== '18+ years') {
-                        const childName = document.getElementById('childFullName').value.trim();
-                        let relationship = document.getElementById('relationshipToChild').value;
-                        if (relationship === 'Other') {
-                            relationship += ` (${document.getElementById('relationshipOtherText').value.trim()})`;
+                    const submitButton = appointmentForm.querySelector('button[type="submit"]');
+                    const originalButtonText = submitButton.textContent;
+
+                    submitButton.disabled = true;
+                    submitButton.textContent = 'Submitting Request...';
+                    submitButton.classList.add('opacity-75', 'cursor-not-allowed');
+
+                    try {
+                        const response = await fetch('/api/submit-appointment', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(formData)
+                        });
+
+                        const result = await response.json();
+
+                        if (response.ok && result.success) {
+                            feedbackDiv.className = 'p-4 mb-4 text-xs font-semibold uppercase tracking-wider text-center bg-green-50 text-green-800 border border-green-200';
+                            feedbackDiv.textContent = 'Your appointment request has been submitted successfully. We will contact you to confirm your appointment.';
+                            feedbackDiv.classList.remove('hidden');
+
+                            appointmentForm.reset();
+                            const under18Container = document.getElementById('under18Fields');
+                            if (under18Container) under18Container.classList.add('hidden');
+                        } else {
+                            throw new Error(result.error || 'Server failed to process submission.');
                         }
-                        message += `• Child's Full Name: ${childName}\n`;
-                        message += `• Relationship to Child: ${relationship}\n`;
+                    } catch (error) {
+                        feedbackDiv.className = 'p-4 mb-4 text-xs font-semibold uppercase tracking-wider text-center bg-red-50 text-red-800 border border-red-200';
+                        feedbackDiv.textContent = 'Error: ' + (error.message || 'Unable to submit request. Please try again or call us directly at 012 643 1191.');
+                        feedbackDiv.classList.remove('hidden');
+                    } finally {
+                        submitButton.disabled = false;
+                        submitButton.textContent = originalButtonText;
+                        submitButton.classList.remove('opacity-75', 'cursor-not-allowed');
                     }
-
-                    if (notes) {
-                        message += `• Additional Notes: ${notes}\n`;
-                    }
-
-                    alert("Thank you, " + firstName + ". Your appointment request has been prepared. Please contact the practice directly at 012 643 1191 or email proteacaremedical@gmail.com to confirm your booking.");
                 });
             }
         });
