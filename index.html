@@ -836,7 +836,6 @@
                             body: JSON.stringify(formData)
                         });
 
-                        // Robust response parsing to avoid "Unexpected end of JSON input"
                         let result;
                         const contentType = response.headers.get('content-type');
                         if (contentType && contentType.includes('application/json')) {
@@ -849,7 +848,7 @@
 
                         if (response.ok && result.success) {
                             feedbackDiv.className = 'p-4 mb-4 text-xs font-semibold uppercase tracking-wider text-center bg-green-50 text-green-800 border border-green-200';
-                            feedbackDiv.textContent = 'Your appointment request has been submitted successfully. We will contact you to confirm your appointment.';
+                            feedbackDiv.textContent = 'Thank you for contacting Protea Care Medical. Your appointment request has been submitted successfully. Our team will contact you to confirm your appointment.';
                             feedbackDiv.classList.remove('hidden');
 
                             appointmentForm.reset();
@@ -860,7 +859,7 @@
                         }
                     } catch (error) {
                         feedbackDiv.className = 'p-4 mb-4 text-xs font-semibold uppercase tracking-wider text-center bg-red-50 text-red-800 border border-red-200';
-                        feedbackDiv.textContent = 'Error: ' + (error.message || 'Unable to submit request. Please try again or call us directly at 012 643 1191.');
+                        feedbackDiv.textContent = 'We could not submit your appointment request at this time. Your details have been kept in the form. Please try again or contact our practice directly.';
                         feedbackDiv.classList.remove('hidden');
                     } finally {
                         submitButton.disabled = false;
