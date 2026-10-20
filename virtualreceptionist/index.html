@@ -11,47 +11,35 @@
     
     <style>
         /* ==========================================================================
-           1. CSS VARIABLES & DESIGN TOKENS
+           1. CSS VARIABLES & DESIGN TOKENS (WhatsApp Aesthetic)
            ========================================================================== */
         :root {
-            --color-navy: #102B50;
-            --color-navy-dark: #0A1C35;
-            --color-navy-light: #1E3D6B;
-            --color-white: #FFFFFF;
-            --color-ivory: #F8F6F0;
-            --color-ivory-dark: #EFECE3;
-            --color-gold: #C5A46D;
-            --color-gold-light: #E8D3B0;
-            --color-gold-hover: #B28F56;
-            --color-green: #78998B;
-            --color-green-dark: #2D5A46;
-            --color-green-light: #EBF2EE;
-            --color-rose: #D99BAF;
-            --color-rose-light: #FBF0F3;
-            --color-text-main: #27364A;
-            --color-text-muted: #5C6E84;
-            --color-border: #E2E8F0;
-            --color-card-bg: #FFFFFF;
-            --color-red-alert: #C53030;
-            --color-red-bg: #FFF5F5;
+            --color-whatsapp-bg: #efeae2;
+            --color-whatsapp-header: #005c4b;
+            --color-whatsapp-header-text: #ffffff;
+            --color-whatsapp-outgoing: #d9fdd3;
+            --color-whatsapp-incoming: #ffffff;
+            --color-whatsapp-text: #111b21;
+            --color-whatsapp-muted: #667781;
+            --color-whatsapp-border: #e9edef;
+            --color-whatsapp-input-bg: #f0f2f5;
 
-            --font-heading: 'Playfair Display', Georgia, serif;
+            --font-heading: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
-            --shadow-sm: 0 2px 4px rgba(10, 28, 53, 0.04);
-            --shadow-md: 0 6px 18px rgba(10, 28, 53, 0.08);
-            --shadow-lg: 0 12px 32px rgba(10, 28, 53, 0.12);
+            --shadow-sm: 0 1px 3px rgba(11, 20, 26, 0.08);
+            --shadow-md: 0 4px 12px rgba(11, 20, 26, 0.12);
+            --shadow-lg: 0 18px 36px rgba(0, 0, 0, 0.22);
 
             --radius-sm: 8px;
-            --radius-md: 14px;
-            --radius-lg: 20px;
+            --radius-md: 12px;
+            --radius-lg: 18px;
             --radius-full: 9999px;
 
             --transition-fast: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
             --transition-normal: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* High Contrast / Dark Mode Adjustments fallback standard reset */
         *, *::before, *::after {
             box-sizing: border-box;
             margin: 0;
@@ -63,24 +51,19 @@
            ========================================================================== */
         html, body {
             height: 100%;
-            background-color: #0A1C35;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(197, 164, 109, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(120, 153, 139, 0.08) 0%, transparent 40%);
+            background-color: var(--color-whatsapp-bg);
             font-family: var(--font-body);
-            color: var(--color-text-main);
+            color: var(--color-whatsapp-text);
             line-height: 1.5;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Visible Focus outline for keyboard navigation */
         :focus-visible {
-            outline: 3px solid var(--color-gold);
+            outline: 3px solid var(--color-whatsapp-header);
             outline-offset: 2px;
         }
 
-        /* Reduced Motion */
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
                 animation-duration: 0.01ms !important;
@@ -90,7 +73,6 @@
             }
         }
 
-        /* Utility visually hidden */
         .sr-only {
             position: absolute;
             width: 1px;
@@ -111,18 +93,18 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 16px;
+            padding: 0;
         }
 
         .chat-container {
             width: 100%;
-            max-width: 760px;
-            height: 92vh;
-            max-height: 900px;
-            background: var(--color-ivory);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-lg);
-            border: 1px solid rgba(197, 164, 109, 0.3);
+            max-width: 100%;
+            height: 100vh;
+            max-height: 100vh;
+            background: var(--color-whatsapp-bg);
+            border-radius: 0;
+            box-shadow: none;
+            border: none;
             display: flex;
             flex-direction: column;
             overflow: hidden;
@@ -130,37 +112,42 @@
         }
 
         /* ==========================================================================
-           4. HEADER SECTION
+           4. HEADER SECTION (WhatsApp Header)
            ========================================================================== */
         .chat-header {
-            background: linear-gradient(135deg, var(--color-navy-dark) 0%, var(--color-navy) 100%);
-            color: var(--color-white);
-            padding: 18px 24px;
+            background: var(--color-whatsapp-header);
+            color: var(--color-whatsapp-header-text);
+            padding: 10px 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-bottom: 2px solid var(--color-gold);
+            border-bottom: none;
             position: relative;
             z-index: 10;
+            box-shadow: var(--shadow-sm);
         }
 
         .brand-block {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
         }
 
-        .brand-logo {
-            width: 48px;
-            height: 48px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--color-gold);
-            border-radius: var(--radius-full);
+        .back-icon-btn {
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-shrink: 0;
             padding: 6px;
+            border-radius: var(--radius-full);
+            transition: var(--transition-fast);
+        }
+
+        .back-icon-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .brand-details {
@@ -170,104 +157,102 @@
 
         .brand-title {
             font-family: var(--font-heading);
-            font-size: 1.25rem;
-            font-weight: 700;
-            letter-spacing: 0.02em;
-            color: var(--color-white);
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.01em;
+            color: #ffffff;
             line-height: 1.2;
         }
 
         .brand-subtitle {
-            font-size: 0.8125rem;
-            color: var(--color-gold-light);
-            font-weight: 500;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 400;
             display: flex;
             align-items: center;
             gap: 6px;
         }
 
-        /* Dynamic Status Indicator Badge */
         .status-badge {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 6px 14px;
+            gap: 6px;
+            padding: 4px 10px;
             border-radius: var(--radius-full);
-            font-size: 0.8125rem;
-            font-weight: 600;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            transition: var(--transition-fast);
+            font-size: 0.75rem;
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            color: #ffffff;
         }
 
         .status-dot {
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
             display: inline-block;
         }
 
         .status-dot.open {
-            background-color: #34D399;
-            box-shadow: 0 0 8px rgba(52, 211, 153, 0.6);
+            background-color: #25d366;
+            box-shadow: 0 0 6px rgba(37, 211, 102, 0.8);
         }
 
         .status-dot.closed {
-            background-color: #F87171;
-            box-shadow: 0 0 8px rgba(248, 113, 113, 0.6);
+            background-color: #f87171;
+            box-shadow: 0 0 6px rgba(248, 113, 113, 0.8);
         }
 
-        /* Reset/Restart Chat Button */
         .header-actions {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .btn-icon-reset {
-            background: transparent;
-            border: 1px solid rgba(197, 164, 109, 0.4);
-            color: var(--color-gold-light);
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            color: #ffffff;
             border-radius: var(--radius-sm);
-            padding: 6px 12px;
-            font-size: 0.78rem;
-            font-weight: 600;
+            padding: 6px 10px;
+            font-size: 0.75rem;
+            font-weight: 500;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
             transition: var(--transition-fast);
         }
 
         .btn-icon-reset:hover {
-            background: rgba(197, 164, 109, 0.15);
-            color: var(--color-white);
-            border-color: var(--color-gold);
+            background: rgba(255, 255, 255, 0.25);
         }
 
         /* ==========================================================================
-           5. CONVERSATION VIEW & CHAT MESSAGES
+           5. CONVERSATION VIEW & CHAT MESSAGES (WhatsApp Chat Area)
            ========================================================================== */
         .chat-body {
             flex: 1;
             overflow-y: auto;
-            padding: 24px;
+            padding: 16px;
             display: flex;
             flex-direction: column;
-            gap: 18px;
+            gap: 12px;
             scroll-behavior: smooth;
+            background-image: radial-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 0);
+            background-size: 24px 24px;
         }
 
         .message-group {
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            max-width: 88%;
-            animation: fadeIn 0.3s ease-out forwards;
+            gap: 2px;
+            max-width: 85%;
+            animation: fadeIn 0.2s ease-out forwards;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
+            from { opacity: 0; transform: translateY(4px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -280,205 +265,176 @@
         }
 
         .sender-label {
-            font-size: 0.725rem;
-            font-weight: 600;
-            color: var(--color-text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-left: 4px;
+            display: none; /* WhatsApp does not show sender labels for individual threads */
         }
 
         .message-bubble {
-            padding: 16px 20px;
-            border-radius: var(--radius-md);
-            font-size: 0.95rem;
-            line-height: 1.6;
+            padding: 8px 12px 6px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            line-height: 1.45;
             position: relative;
             box-shadow: var(--shadow-sm);
         }
 
         .message-group.bot .message-bubble {
-            background: var(--color-white);
-            color: var(--color-text-main);
-            border-top-left-radius: 4px;
-            border: 1px solid rgba(16, 43, 80, 0.08);
-            border-left: 4px solid var(--color-navy);
+            background: var(--color-whatsapp-incoming);
+            color: var(--color-whatsapp-text);
+            border-top-left-radius: 0;
+            border: none;
         }
 
         .message-group.user .message-bubble {
-            background: var(--color-navy);
-            color: var(--color-white);
-            border-top-right-radius: 4px;
-            border-right: 4px solid var(--color-gold);
+            background: var(--color-whatsapp-outgoing);
+            color: var(--color-whatsapp-text);
+            border-top-right-radius: 0;
+            border: none;
         }
 
-        /* Highlight box within bot response */
         .info-card-box {
-            background: var(--color-ivory);
-            border: 1px solid var(--color-gold-light);
-            border-radius: var(--radius-sm);
-            padding: 14px 16px;
-            margin-top: 12px;
-            font-size: 0.9rem;
+            background: rgba(0, 0, 0, 0.03);
+            border-left: 3px solid var(--color-whatsapp-header);
+            border-radius: 4px;
+            padding: 10px 12px;
+            margin-top: 8px;
+            font-size: 0.85rem;
         }
 
         .info-card-box strong {
-            color: var(--color-navy);
+            color: var(--color-whatsapp-header);
         }
 
         .alert-card-box {
-            background: var(--color-red-bg);
-            border: 1px solid #FEB2B2;
-            color: #9B2C2C;
-            border-radius: var(--radius-sm);
-            padding: 14px 16px;
-            margin-top: 12px;
-            font-size: 0.9rem;
+            background: #fff5f5;
+            border-left: 3px solid #e53e3e;
+            color: #9b2c2c;
+            border-radius: 4px;
+            padding: 10px 12px;
+            margin-top: 8px;
+            font-size: 0.85rem;
         }
 
-        /* Timestamp */
         .message-time {
-            font-size: 0.6875rem;
-            color: var(--color-text-muted);
-            margin-top: 4px;
+            font-size: 0.65rem;
+            color: var(--color-whatsapp-muted);
+            margin-top: 2px;
             align-self: flex-end;
+            display: flex;
+            align-items: center;
+            gap: 2px;
         }
 
         /* ==========================================================================
-           6. INTERACTIVE OPTIONS / BUTTONS CONTAINER
+           6. INTERACTIVE OPTIONS / BUTTONS CONTAINER (WhatsApp Interactive Pills)
            ========================================================================== */
         .options-wrapper {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 10px;
-            margin-top: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-top: 8px;
             width: 100%;
         }
 
         .option-btn {
-            background: var(--color-white);
-            border: 1.5px solid rgba(16, 43, 80, 0.15);
-            color: var(--color-navy);
-            padding: 12px 16px;
-            border-radius: var(--radius-sm);
+            background: #ffffff;
+            border: 1px solid #d1d7db;
+            color: #00a884;
+            padding: 8px 14px;
+            border-radius: var(--radius-full);
             font-family: var(--font-body);
-            font-size: 0.88rem;
+            font-size: 0.85rem;
             font-weight: 600;
-            text-align: left;
+            text-align: center;
             cursor: pointer;
             transition: all var(--transition-fast);
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+            justify-content: center;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
             width: 100%;
         }
 
         .option-btn:hover, .option-btn:focus-visible {
-            background: var(--color-navy);
-            color: var(--color-white);
-            border-color: var(--color-navy);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .option-btn:active {
-            transform: translateY(0);
+            background: #f0f2f5;
+            border-color: #00a884;
+            color: #008069;
         }
 
         .option-btn .btn-arrow {
-            color: var(--color-gold);
-            font-size: 1rem;
-            transition: transform var(--transition-fast);
-            margin-left: 8px;
-            flex-shrink: 0;
+            display: none; /* Clean WhatsApp look without explicit arrows */
         }
 
-        .option-btn:hover .btn-arrow {
-            transform: translateX(3px);
-            color: var(--color-gold-light);
-        }
-
-        /* Secondary Nav Actions (Back / Main Menu) */
         .navigation-actions {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             flex-wrap: wrap;
-            margin-top: 14px;
-            padding-top: 12px;
-            border-top: 1px dashed rgba(16, 43, 80, 0.12);
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
             width: 100%;
         }
 
         .nav-btn {
-            background: var(--color-ivory-dark);
-            border: 1px solid rgba(16, 43, 80, 0.12);
-            color: var(--color-navy);
-            padding: 8px 14px;
+            background: #e9edef;
+            border: none;
+            color: var(--color-whatsapp-text);
+            padding: 6px 12px;
             border-radius: var(--radius-full);
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition-fast);
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
         }
 
         .nav-btn:hover, .nav-btn:focus-visible {
-            background: var(--color-gold);
-            color: var(--color-navy-dark);
-            border-color: var(--color-gold);
+            background: #d1d7db;
         }
 
-        /* Action Buttons for Tel / Map Links inside cards */
         .action-link-btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            background: var(--color-navy);
-            color: var(--color-white) !important;
+            gap: 6px;
+            background: #00a884;
+            color: #ffffff !important;
             text-decoration: none;
-            padding: 10px 18px;
-            border-radius: var(--radius-sm);
-            font-size: 0.875rem;
+            padding: 8px 14px;
+            border-radius: var(--radius-full);
+            font-size: 0.85rem;
             font-weight: 600;
-            margin-top: 10px;
-            margin-right: 8px;
+            margin-top: 8px;
+            margin-right: 6px;
             transition: var(--transition-fast);
-            border: 1px solid var(--color-navy);
+            border: none;
         }
 
         .action-link-btn:hover {
-            background: var(--color-gold);
-            color: var(--color-navy-dark) !important;
-            border-color: var(--color-gold);
+            background: #008069;
         }
 
         .action-link-btn.secondary {
-            background: var(--color-white);
-            color: var(--color-navy) !important;
-            border: 1.5px solid var(--color-navy);
+            background: #ffffff;
+            color: #00a884 !important;
+            border: 1px solid #d1d7db;
         }
 
         .action-link-btn.secondary:hover {
-            background: var(--color-ivory);
-            border-color: var(--color-gold);
-            color: var(--color-navy) !important;
+            background: #f0f2f5;
         }
 
         /* ==========================================================================
            7. PERSISTENT FOOTER & DIRECT CONTACT SUPPORT
            ========================================================================== */
         .chat-footer {
-            background: var(--color-white);
-            border-top: 1px solid var(--color-border);
-            padding: 14px 20px;
+            background: var(--color-whatsapp-input-bg);
+            border-top: 1px solid var(--color-whatsapp-border);
+            padding: 10px 16px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            box-shadow: 0 -4px 12px rgba(0,0,0,0.03);
+            gap: 8px;
             position: relative;
             z-index: 5;
         }
@@ -487,11 +443,11 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: var(--color-ivory);
-            border: 1px solid rgba(197, 164, 109, 0.4);
+            background: #ffffff;
+            border: 1px solid var(--color-whatsapp-border);
             border-radius: var(--radius-md);
-            padding: 10px 16px;
-            gap: 12px;
+            padding: 8px 12px;
+            gap: 8px;
         }
 
         .support-info {
@@ -500,62 +456,59 @@
         }
 
         .support-title {
-            font-size: 0.78rem;
+            font-size: 0.75rem;
             font-weight: 700;
-            color: var(--color-navy);
+            color: var(--color-whatsapp-header);
             text-transform: uppercase;
-            letter-spacing: 0.03em;
         }
 
         .support-text {
-            font-size: 0.8125rem;
-            color: var(--color-text-muted);
+            font-size: 0.75rem;
+            color: var(--color-whatsapp-muted);
         }
 
         .support-actions {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             flex-shrink: 0;
         }
 
         .footer-cta-btn {
-            padding: 8px 12px;
+            padding: 6px 10px;
             border-radius: var(--radius-sm);
-            font-size: 0.78rem;
-            font-weight: 700;
+            font-size: 0.75rem;
+            font-weight: 600;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
             transition: var(--transition-fast);
         }
 
         .footer-cta-btn.call {
-            background: var(--color-navy);
-            color: var(--color-white);
+            background: #00a884;
+            color: #ffffff;
         }
 
         .footer-cta-btn.call:hover {
-            background: var(--color-gold);
-            color: var(--color-navy-dark);
+            background: #008069;
         }
 
         .footer-cta-btn.email {
-            background: var(--color-white);
-            color: var(--color-navy);
-            border: 1px solid var(--color-border);
+            background: #ffffff;
+            color: var(--color-whatsapp-text);
+            border: 1px solid #d1d7db;
         }
 
         .footer-cta-btn.email:hover {
-            border-color: var(--color-gold);
-            background: var(--color-ivory);
+            background: #f0f2f5;
         }
 
         .disclaimer-text {
-            font-size: 0.7rem;
-            color: var(--color-text-muted);
+            font-size: 0.65rem;
+            color: var(--color-whatsapp-muted);
             text-align: center;
-            line-height: 1.35;
+            line-height: 1.3;
         }
 
         /* Responsive Breakpoints */
@@ -566,39 +519,35 @@
 
             .chat-container {
                 height: 100vh;
-                max-height: none;
+                max-height: 100vh;
                 border-radius: 0;
                 border: none;
             }
 
             .chat-header {
-                padding: 14px 16px;
+                padding: 10px 12px;
             }
 
             .brand-title {
-                font-size: 1.1rem;
+                font-size: 0.95rem;
             }
 
             .status-badge span.status-text {
-                display: none; /* Show dot only on narrow screens */
+                display: none;
             }
 
             .chat-body {
-                padding: 16px;
+                padding: 12px;
             }
 
             .message-group {
-                max-width: 96%;
-            }
-
-            .options-wrapper {
-                grid-template-columns: 1fr;
+                max-width: 92%;
             }
 
             .persistent-support-bar {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 8px;
+                gap: 6px;
             }
 
             .support-actions {
@@ -620,22 +569,15 @@
         <!-- HEADER -->
         <header class="chat-header">
             <div class="brand-block">
-                <div class="brand-logo" aria-hidden="true">
-                    <!-- Inline SVG Protea Floral Emblem -->
-                    <svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M50 15 C35 35 25 55 25 75 C38 75 48 68 50 55 C52 68 62 75 75 75 C75 55 65 35 50 15 Z" fill="#D99BAF" />
-                        <path d="M50 25 C40 40 33 58 35 72 C43 70 48 63 50 52 C52 63 57 70 65 72 C67 58 60 40 50 25 Z" fill="#C5A46D" />
-                        <path d="M50 90 L50 55" stroke="#78998B" stroke-width="4" stroke-linecap="round" />
-                        <path d="M50 78 C40 80 30 85 20 80 C25 72 38 70 50 78 Z" fill="#78998B" />
-                        <path d="M50 78 C60 80 70 85 80 80 C75 72 62 70 50 78 Z" fill="#78998B" />
-                    </svg>
-                </div>
+                <button id="backIconBtn" class="back-icon-btn" title="Go back" aria-label="Go back">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                </button>
                 <div class="brand-details">
                     <h1 class="brand-title">Protea Care Medical</h1>
                     <div class="brand-subtitle">
                         <span>Virtual Receptionist</span>
                         <span>•</span>
-                        <span>Dr M Kazzadi</span>
+                        <span>Dr M Kazadi</span>
                     </div>
                 </div>
             </div>
@@ -648,7 +590,7 @@
                 </div>
 
                 <button id="resetChatBtn" class="btn-icon-reset" title="Restart conversation" aria-label="Restart conversation">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
                     <span>Reset</span>
                 </button>
             </div>
@@ -697,7 +639,7 @@
 // 1. Centralized Practice Data
 const PRACTICE_INFO = {
     name: "Protea Care Medical (Pty) Ltd",
-    doctor: "Dr M Kazzadi",
+    doctor: "Dr M Kazadi",
     qualifications: [
         "MBChB (UKZN)",
         "Dip-Obst (SA)",
@@ -749,7 +691,6 @@ function getSouthAfricaDateTime() {
         const dateObj = {};
         parts.forEach(p => dateObj[p.type] = p.value);
 
-        // Convert weekday string to numeric day index (0 = Sun, 1 = Mon, etc.)
         const dayMap = { 'Sun': 0, 'Mon': 1, 'Tue': 2, 'Wed': 3, 'Thu': 4, 'Fri': 5, 'Sat': 6 };
         const dayOfWeek = dayMap[dateObj.weekday];
         const hours = parseInt(dateObj.hour, 10);
@@ -758,7 +699,6 @@ function getSouthAfricaDateTime() {
 
         return { dayOfWeek, currentTotalMinutes, hours, minutes };
     } catch (e) {
-        // Fallback to local browser time if Intl is somehow restricted
         const now = new Date();
         return {
             dayOfWeek: now.getDay(),
@@ -782,7 +722,6 @@ function calculatePracticeOpeningStatus() {
         if (currentTotalMinutes < todaySchedule.openMin) {
             statusString = `We are currently closed. We open today at ${todaySchedule.open}.`;
         } else {
-            // Find next open day
             const nextDayIndex = (dayOfWeek + 1) % 7;
             const nextSchedule = PRACTICE_INFO.schedule[nextDayIndex];
             const dayLabel = (nextDayIndex === (dayOfWeek + 1)) ? "tomorrow" : `on ${nextSchedule.name}`;
@@ -808,7 +747,6 @@ function updateHeaderStatusBadge() {
     document.getElementById('liveStatusBadge').setAttribute('title', statusString);
 }
 
-// Helper to format timestamps
 function getCurrentTimeString() {
     const { hours, minutes } = getSouthAfricaDateTime();
     const hStr = hours < 10 ? '0' + hours : hours;
@@ -825,7 +763,7 @@ const MENU_NODES = {
             { label: "Opening Hours", target: "hours" },
             { label: "Find Our Location", target: "location" },
             { label: "Contact the Practice", target: "contact" },
-            { label: "About Dr Kazzadi", target: "doctor" },
+            { label: "About Dr Kazadi", target: "doctor" },
             { label: "Appointments & Visit Info", target: "appointments" },
             { label: "Emergency Information", target: "emergency" }
         ]
@@ -849,9 +787,8 @@ const MENU_NODES = {
         hasBack: true
     },
 
-    // Individual Service Explanations
     'srv_antenatal': {
-        prompt: `<strong>Antenatal Care — BANC Plus</strong><br><br>Our practice lists comprehensive antenatal care, including the Basic Antenatal Care Plus (BANC Plus) package, among its core clinical services.<br><div class="info-card-box">Please select <strong>Contact the Practice</strong> if you would like to confirm consultation availability or arrange a visit with Dr Kazzadi.</div>`,
+        prompt: `<strong>Antenatal Care — BANC Plus</strong><br><br>Our practice lists comprehensive antenatal care, including the Basic Antenatal Care Plus (BANC Plus) package, among its core clinical services.<br><div class="info-card-box">Please select <strong>Contact the Practice</strong> if you would like to confirm consultation availability or arrange a visit with Dr Kazadi.</div>`,
         options: [
             { label: "Explore Another Service", target: "services" },
             { label: "Contact the Practice", target: "contact" },
@@ -865,7 +802,7 @@ const MENU_NODES = {
         options: [
             { label: "Explore Another Service", target: "services" },
             { label: "Contact the Practice", target: "contact" },
-            { label: "About Dr Kazzadi", target: "doctor" }
+            { label: "About Dr Kazadi", target: "doctor" }
         ],
         hasBack: true
     },
@@ -884,7 +821,7 @@ const MENU_NODES = {
         options: [
             { label: "Explore Another Service", target: "services" },
             { label: "Contact the Practice", target: "contact" },
-            { label: "About Dr Kazzadi", target: "doctor" }
+            { label: "About Dr Kazadi", target: "doctor" }
         ],
         hasBack: true
     },
@@ -955,12 +892,11 @@ const MENU_NODES = {
         hasBack: true
     },
 
-    // OPENING HOURS NODE
     'hours': {
         prompt: () => {
             const { statusString } = calculatePracticeOpeningStatus();
             return `<strong>Operating Hours — Protea Care Medical</strong><br><br>
-            <div class="info-card-box" style="margin-bottom: 12px; border-left: 4px solid var(--color-gold);">
+            <div class="info-card-box" style="margin-bottom: 8px;">
                 <strong>Current Live Status:</strong><br>${statusString}
             </div>
             <strong>Weekly Schedule:</strong><br>
@@ -981,7 +917,6 @@ const MENU_NODES = {
         hasBack: true
     },
 
-    // LOCATION NODE
     'location': {
         prompt: `<strong>Practice Location</strong><br><br>
         <strong>Protea Care Medical (Pty) Ltd</strong><br>
@@ -1000,7 +935,6 @@ const MENU_NODES = {
         hasBack: true
     },
 
-    // CONTACT NODE
     'contact': {
         prompt: `<strong>Contact Protea Care Medical</strong><br><br>
         Our team is available during operating hours to assist with your enquiries, bookings, and service confirmations.<br><br>
@@ -1018,12 +952,11 @@ const MENU_NODES = {
         options: [
             { label: "View Location", target: "location" },
             { label: "View Opening Hours", target: "hours" },
-            { label: "About Dr Kazzadi", target: "doctor" }
+            { label: "About Dr Kazadi", target: "doctor" }
         ],
         hasBack: true
     },
 
-    // DOCTOR NODE
     'doctor': {
         prompt: `<strong>Medical Practitioner Details</strong><br><br>
         <strong>${PRACTICE_INFO.doctor}</strong><br><br>
@@ -1044,7 +977,6 @@ const MENU_NODES = {
         hasBack: true
     },
 
-    // APPOINTMENTS NODE
     'appointments': {
         prompt: `<strong>Appointments & Visit Information</strong><br><br>
         Please choose a specific topic below to learn how to prepare for your visit:`,
@@ -1102,10 +1034,9 @@ const MENU_NODES = {
         hasBack: true
     },
 
-    // EMERGENCY NODE
     'emergency': {
         prompt: `<div class="alert-card-box">
-            <strong style="font-size: 1.05rem;">🚨 EMERGENCY NOTICE</strong><br><br>
+            <strong style="font-size: 1rem;">🚨 EMERGENCY NOTICE</strong><br><br>
             If you or someone nearby may be experiencing a life-threatening medical emergency, <strong>seek immediate emergency assistance</strong> or go to the nearest emergency medical centre.<br><br>
             <strong>Do not wait for this virtual assistant or rely on it to assess your symptoms.</strong>
         </div>
@@ -1120,18 +1051,11 @@ const MENU_NODES = {
 
 // 4. RENDERING & DISPLAY FUNCTIONS
 
-/**
- * Render user selected choice bubble into chat
- */
 function appendUserChoiceBubble(text) {
     const chatBody = document.getElementById('chatBody');
 
     const messageGroup = document.createElement('div');
     messageGroup.className = 'message-group user';
-
-    const label = document.createElement('span');
-    label.className = 'sender-label';
-    label.textContent = 'You';
 
     const bubble = document.createElement('div');
     bubble.className = 'message-bubble';
@@ -1139,9 +1063,8 @@ function appendUserChoiceBubble(text) {
 
     const time = document.createElement('span');
     time.className = 'message-time';
-    time.textContent = getCurrentTimeString();
+    time.innerHTML = `${getCurrentTimeString()} ✓✓`;
 
-    messageGroup.appendChild(label);
     messageGroup.appendChild(bubble);
     messageGroup.appendChild(time);
 
@@ -1149,9 +1072,6 @@ function appendUserChoiceBubble(text) {
     scrollToBottom();
 }
 
-/**
- * Render Bot Response Bubble and clickable option controls
- */
 function renderBotNode(nodeKey, userChoiceLabel = null) {
     const node = MENU_NODES[nodeKey];
     if (!node) return;
@@ -1162,22 +1082,15 @@ function renderBotNode(nodeKey, userChoiceLabel = null) {
 
     const chatBody = document.getElementById('chatBody');
 
-    // Bot Container Group
     const messageGroup = document.createElement('div');
     messageGroup.className = 'message-group bot';
-
-    const label = document.createElement('span');
-    label.className = 'sender-label';
-    label.textContent = 'Protea Care Virtual Assistant';
 
     const bubble = document.createElement('div');
     bubble.className = 'message-bubble';
 
-    // Evaluate prompt if dynamic function, else string HTML
     const promptText = (typeof node.prompt === 'function') ? node.prompt() : node.prompt;
     bubble.innerHTML = promptText;
 
-    // Render Option Buttons Grid
     if (node.options && node.options.length > 0) {
         const optionsWrapper = document.createElement('div');
         optionsWrapper.className = 'options-wrapper';
@@ -1186,16 +1099,11 @@ function renderBotNode(nodeKey, userChoiceLabel = null) {
             const btn = document.createElement('button');
             btn.className = 'option-btn';
             btn.type = 'button';
-            btn.innerHTML = `<span>${opt.label}</span><span class="btn-arrow" aria-hidden="true">→</span>`;
+            btn.innerHTML = `<span>${opt.label}</span>`;
             
             btn.addEventListener('click', () => {
-                // Remove previous interactive buttons from history view to keep interface tidy
                 optionsWrapper.querySelectorAll('button').forEach(b => b.disabled = true);
-                
-                // Track history stack
                 historyStack.push(nodeKey);
-                
-                // Render Next Step
                 renderBotNode(opt.target, opt.label);
             });
 
@@ -1205,7 +1113,6 @@ function renderBotNode(nodeKey, userChoiceLabel = null) {
         bubble.appendChild(optionsWrapper);
     }
 
-    // Render Navigation (Back / Main Menu) actions
     const navActions = document.createElement('div');
     navActions.className = 'navigation-actions';
 
@@ -1241,12 +1148,20 @@ function renderBotNode(nodeKey, userChoiceLabel = null) {
     time.className = 'message-time';
     time.textContent = getCurrentTimeString();
 
-    messageGroup.appendChild(label);
     messageGroup.appendChild(bubble);
     messageGroup.appendChild(time);
 
     chatBody.appendChild(messageGroup);
     scrollToBottom();
+}
+
+function handleBackAction() {
+    if (historyStack.length > 0) {
+        const previousNode = historyStack.pop();
+        renderBotNode(previousNode, 'Back');
+    } else {
+        window.history.back();
+    }
 }
 
 function scrollToBottom() {
@@ -1264,17 +1179,17 @@ function restartChat() {
 
 // 5. INITIALIZATION
 window.addEventListener('DOMContentLoaded', () => {
-    // Update live status badge
     updateHeaderStatusBadge();
-    // Update status badge every 60 seconds
     setInterval(updateHeaderStatusBadge, 60000);
 
-    // Bind header reset button
     document.getElementById('resetChatBtn').addEventListener('click', () => {
         restartChat();
     });
 
-    // Start initial conversation
+    document.getElementById('backIconBtn').addEventListener('click', () => {
+        handleBackAction();
+    });
+
     renderBotNode('main');
 });
 </script>
