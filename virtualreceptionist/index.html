@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protea Care Medical — Virtual Receptionist</title>
+    <!-- Google Fonts for typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ==========================================================================
+           1. CSS VARIABLES & DESIGN TOKENS
+           ========================================================================== */
+        :root {
+            --color-navy: #102B50;
+            --color-navy-dark: #0A1C35;
+            --color-navy-light: #1E3D6B;
+            --color-white: #FFFFFF;
+            --color-ivory: #F8F6F0;
+            --color-ivory-dark: #EFECE3;
+            --color-gold: #C5A46D;
+            --color-gold-light: #E8D3B0;
+            --color-gold-hover: #B28F56;
+            --color-green: #78998B;
+            --color-green-dark: #2D5A46;
+            --color-green-light: #EBF2EE;
+            --color-rose: #D99BAF;
+            --color-rose-light: #FBF0F3;
+            --color-text-main: #27364A;
+            --color-text-muted: #5C6E84;
+            --color-border: #E2E8F0;
+            --color-card-bg: #FFFFFF;
+            --color-red-alert: #C53030;
+            --color-red-bg: #FFF5F5;
+
+            --font-heading: 'Playfair Display', Georgia, serif;
+            --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+            --shadow-sm: 0 2px 4px rgba(10, 28, 53, 0.04);
+            --shadow-md: 0 6px 18px rgba(10, 28, 53, 0.08);
+            --shadow-lg: 0 12px 32px rgba(10, 28, 53, 0.12);
+
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --radius-full: 9999px;
+
+            --transition-fast: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-normal: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* High Contrast / Dark Mode Adjustments fallback standard reset */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* ==========================================================================
+           2. BASE STYLES & ACCESSIBILITY
+           ========================================================================== */
+        html, body {
+            height: 100%;
+            background-color: #0A1C35;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(197, 164, 109, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(120, 153, 139, 0.08) 0%, transparent 40%);
+            font-family: var(--font-body);
+            color: var(--color-text-main);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Visible Focus outline for keyboard navigation */
+        :focus-visible {
+            outline: 3px solid var(--color-gold);
+            outline-offset: 2px;
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        /* Utility visually hidden */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* ==========================================================================
+           3. CONTAINER & LAYOUT STRUCTURE
+           ========================================================================== */
+        .app-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 16px;
+        }
+
+        .chat-container {
+            width: 100%;
+            max-width: 760px;
+            height: 92vh;
+            max-height: 900px;
+            background: var(--color-ivory);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(197, 164, 109, 0.3);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* ==========================================================================
+           4. HEADER SECTION
+           ========================================================================== */
+        .chat-header {
+            background: linear-gradient(135deg, var(--color-navy-dark) 0%, var(--color-navy) 100%);
+            color: var(--color-white);
+            padding: 18px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid var(--color-gold);
+            position: relative;
+            z-index: 10;
+        }
+
+        .brand-block {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .brand-logo {
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--color-gold);
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            padding: 6px;
+        }
+
+        .brand-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-title {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            color: var(--color-white);
+            line-height: 1.2;
+        }
+
+        .brand-subtitle {
+            font-size: 0.8125rem;
+            color: var(--color-gold-light);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Dynamic Status Indicator Badge */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: var(--radius-full);
+            font-size: 0.8125rem;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: var(--transition-fast);
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .status-dot.open {
+            background-color: #34D399;
+            box-shadow: 0 0 8px rgba(52, 211, 153, 0.6);
+        }
+
+        .status-dot.closed {
+            background-color: #F87171;
+            box-shadow: 0 0 8px rgba(248, 113, 113, 0.6);
+        }
+
+        /* Reset/Restart Chat Button */
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-icon-reset {
+            background: transparent;
+            border: 1px solid rgba(197, 164, 109, 0.4);
+            color: var(--color-gold-light);
+            border-radius: var(--radius-sm);
+            padding: 6px 12px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition-fast);
+        }
+
+        .btn-icon-reset:hover {
+            background: rgba(197, 164, 109, 0.15);
+            color: var(--color-white);
+            border-color: var(--color-gold);
+        }
+
+        /* ==========================================================================
+           5. CONVERSATION VIEW & CHAT MESSAGES
+           ========================================================================== */
+        .chat-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            scroll-behavior: smooth;
+        }
+
+        .message-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-width: 88%;
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message-group.bot {
+            align-self: flex-start;
+        }
+
+        .message-group.user {
+            align-self: flex-end;
+        }
+
+        .sender-label {
+            font-size: 0.725rem;
+            font-weight: 600;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-left: 4px;
+        }
+
+        .message-bubble {
+            padding: 16px 20px;
+            border-radius: var(--radius-md);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            position: relative;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .message-group.bot .message-bubble {
+            background: var(--color-white);
+            color: var(--color-text-main);
+            border-top-left-radius: 4px;
+            border: 1px solid rgba(16, 43, 80, 0.08);
+            border-left: 4px solid var(--color-navy);
+        }
+
+        .message-group.user .message-bubble {
+            background: var(--color-navy);
+            color: var(--color-white);
+            border-top-right-radius: 4px;
+            border-right: 4px solid var(--color-gold);
+        }
+
+        /* Highlight box within bot response */
+        .info-card-box {
+            background: var(--color-ivory);
+            border: 1px solid var(--color-gold-light);
+            border-radius: var(--radius-sm);
+            padding: 14px 16px;
+            margin-top: 12px;
+            font-size: 0.9rem;
+        }
+
+        .info-card-box strong {
+            color: var(--color-navy);
+        }
+
+        .alert-card-box {
+            background: var(--color-red-bg);
+            border: 1px solid #FEB2B2;
+            color: #9B2C2C;
+            border-radius: var(--radius-sm);
+            padding: 14px 16px;
+            margin-top: 12px;
+            font-size: 0.9rem;
+        }
+
+        /* Timestamp */
+        .message-time {
+            font-size: 0.6875rem;
+            color: var(--color-text-muted);
+            margin-top: 4px;
+            align-self: flex-end;
+        }
+
+        /* ==========================================================================
+           6. INTERACTIVE OPTIONS / BUTTONS CONTAINER
+           ========================================================================== */
+        .options-wrapper {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 10px;
+            margin-top: 12px;
+            width: 100%;
+        }
+
+        .option-btn {
+            background: var(--color-white);
+            border: 1.5px solid rgba(16, 43, 80, 0.15);
+            color: var(--color-navy);
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            font-family: var(--font-body);
+            font-size: 0.88rem;
+            font-weight: 600;
+            text-align: left;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+            width: 100%;
+        }
+
+        .option-btn:hover, .option-btn:focus-visible {
+            background: var(--color-navy);
+            color: var(--color-white);
+            border-color: var(--color-navy);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .option-btn:active {
+            transform: translateY(0);
+        }
+
+        .option-btn .btn-arrow {
+            color: var(--color-gold);
+            font-size: 1rem;
+            transition: transform var(--transition-fast);
+            margin-left: 8px;
+            flex-shrink: 0;
+        }
+
+        .option-btn:hover .btn-arrow {
+            transform: translateX(3px);
+            color: var(--color-gold-light);
+        }
+
+        /* Secondary Nav Actions (Back / Main Menu) */
+        .navigation-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 14px;
+            padding-top: 12px;
+            border-top: 1px dashed rgba(16, 43, 80, 0.12);
+            width: 100%;
+        }
+
+        .nav-btn {
+            background: var(--color-ivory-dark);
+            border: 1px solid rgba(16, 43, 80, 0.12);
+            color: var(--color-navy);
+            padding: 8px 14px;
+            border-radius: var(--radius-full);
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-btn:hover, .nav-btn:focus-visible {
+            background: var(--color-gold);
+            color: var(--color-navy-dark);
+            border-color: var(--color-gold);
+        }
+
+        /* Action Buttons for Tel / Map Links inside cards */
+        .action-link-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: var(--color-navy);
+            color: var(--color-white) !important;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: var(--radius-sm);
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-top: 10px;
+            margin-right: 8px;
+            transition: var(--transition-fast);
+            border: 1px solid var(--color-navy);
+        }
+
+        .action-link-btn:hover {
+            background: var(--color-gold);
+            color: var(--color-navy-dark) !important;
+            border-color: var(--color-gold);
+        }
+
+        .action-link-btn.secondary {
+            background: var(--color-white);
+            color: var(--color-navy) !important;
+            border: 1.5px solid var(--color-navy);
+        }
+
+        .action-link-btn.secondary:hover {
+            background: var(--color-ivory);
+            border-color: var(--color-gold);
+            color: var(--color-navy) !important;
+        }
+
+        /* ==========================================================================
+           7. PERSISTENT FOOTER & DIRECT CONTACT SUPPORT
+           ========================================================================== */
+        .chat-footer {
+            background: var(--color-white);
+            border-top: 1px solid var(--color-border);
+            padding: 14px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            box-shadow: 0 -4px 12px rgba(0,0,0,0.03);
+            position: relative;
+            z-index: 5;
+        }
+
+        .persistent-support-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--color-ivory);
+            border: 1px solid rgba(197, 164, 109, 0.4);
+            border-radius: var(--radius-md);
+            padding: 10px 16px;
+            gap: 12px;
+        }
+
+        .support-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .support-title {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--color-navy);
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .support-text {
+            font-size: 0.8125rem;
+            color: var(--color-text-muted);
+        }
+
+        .support-actions {
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .footer-cta-btn {
+            padding: 8px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition-fast);
+        }
+
+        .footer-cta-btn.call {
+            background: var(--color-navy);
+            color: var(--color-white);
+        }
+
+        .footer-cta-btn.call:hover {
+            background: var(--color-gold);
+            color: var(--color-navy-dark);
+        }
+
+        .footer-cta-btn.email {
+            background: var(--color-white);
+            color: var(--color-navy);
+            border: 1px solid var(--color-border);
+        }
+
+        .footer-cta-btn.email:hover {
+            border-color: var(--color-gold);
+            background: var(--color-ivory);
+        }
+
+        .disclaimer-text {
+            font-size: 0.7rem;
+            color: var(--color-text-muted);
+            text-align: center;
+            line-height: 1.35;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 640px) {
+            .app-wrapper {
+                padding: 0;
+            }
+
+            .chat-container {
+                height: 100vh;
+                max-height: none;
+                border-radius: 0;
+                border: none;
+            }
+
+            .chat-header {
+                padding: 14px 16px;
+            }
+
+            .brand-title {
+                font-size: 1.1rem;
+            }
+
+            .status-badge span.status-text {
+                display: none; /* Show dot only on narrow screens */
+            }
+
+            .chat-body {
+                padding: 16px;
+            }
+
+            .message-group {
+                max-width: 96%;
+            }
+
+            .options-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .persistent-support-bar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .support-actions {
+                width: 100%;
+            }
+
+            .footer-cta-btn {
+                flex: 1;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-wrapper">
+    <main class="chat-container" aria-label="Protea Care Medical Virtual Receptionist">
+        
+        <!-- HEADER -->
+        <header class="chat-header">
+            <div class="brand-block">
+                <div class="brand-logo" aria-hidden="true">
+                    <!-- Inline SVG Protea Floral Emblem -->
+                    <svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M50 15 C35 35 25 55 25 75 C38 75 48 68 50 55 C52 68 62 75 75 75 C75 55 65 35 50 15 Z" fill="#D99BAF" />
+                        <path d="M50 25 C40 40 33 58 35 72 C43 70 48 63 50 52 C52 63 57 70 65 72 C67 58 60 40 50 25 Z" fill="#C5A46D" />
+                        <path d="M50 90 L50 55" stroke="#78998B" stroke-width="4" stroke-linecap="round" />
+                        <path d="M50 78 C40 80 30 85 20 80 C25 72 38 70 50 78 Z" fill="#78998B" />
+                        <path d="M50 78 C60 80 70 85 80 80 C75 72 62 70 50 78 Z" fill="#78998B" />
+                    </svg>
+                </div>
+                <div class="brand-details">
+                    <h1 class="brand-title">Protea Care Medical</h1>
+                    <div class="brand-subtitle">
+                        <span>Virtual Receptionist</span>
+                        <span>•</span>
+                        <span>Dr M Kazzadi</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="header-actions">
+                <!-- Dynamic Status Indicator Badge -->
+                <div id="liveStatusBadge" class="status-badge" aria-live="polite">
+                    <span id="statusDot" class="status-dot"></span>
+                    <span id="statusText" class="status-text">Calculating...</span>
+                </div>
+
+                <button id="resetChatBtn" class="btn-icon-reset" title="Restart conversation" aria-label="Restart conversation">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                    <span>Reset</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- CONVERSATION / CHAT BODY -->
+        <section id="chatBody" class="chat-body" aria-live="polite" aria-atomic="false">
+            <!-- Messages and interactive dynamic options will be appended here via JS -->
+        </section>
+
+        <!-- PERSISTENT FOOTER & SUPPORT -->
+        <footer class="chat-footer">
+            <div class="persistent-support-bar">
+                <div class="support-info">
+                    <span class="support-title">Direct Reception Support</span>
+                    <span class="support-text">Prefer talking to our receptionist? We're a click away.</span>
+                </div>
+                <div class="support-actions">
+                    <a href="tel:0126431191" class="footer-cta-btn call">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        <span>012 643 1191</span>
+                    </a>
+                    <a href="mailto:proteacaremedical@gmail.com" class="footer-cta-btn email">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                        <span>Email</span>
+                    </a>
+                </div>
+            </div>
+            <p class="disclaimer-text">
+                This virtual assistant provides general information for Protea Care Medical (Pty) Ltd. It does not provide medical diagnosis, prescriptions, or emergency services. For medical emergencies, seek urgent local care.
+            </p>
+        </footer>
+
+    </main>
+</div>
+
+<!-- ==========================================================================
+     8. JAVASCRIPT: CONVERSATION LOGIC & TIME MANAGEMENT
+     ========================================================================== -->
+<script>
+/**
+ * PROTEA CARE MEDICAL — CHATBOT ARCHITECTURE
+ * Clean Vanilla JavaScript Implementation
+ */
+
+// 1. Centralized Practice Data
+const PRACTICE_INFO = {
+    name: "Protea Care Medical (Pty) Ltd",
+    doctor: "Dr M Kazzadi",
+    qualifications: [
+        "MBChB (UKZN)",
+        "Dip-Obst (SA)",
+        "Primary FCOG (SA)",
+        "PGDip-HIV/AIDS Management, Stellenbosch University"
+    ],
+    practiceNum: "0833984",
+    professionalNum: "1314696",
+    focusAreas: "Women's Health, HIV Care, and Family Medicine",
+    phone: "012 643 1191",
+    telLink: "tel:0126431191",
+    email: "proteacaremedical@gmail.com",
+    mailtoLink: "mailto:proteacaremedical@gmail.com",
+    address: "1262 Embankment Road, Opposite Centurion Mall, Centurion, South Africa",
+    mapsQueryUrl: "https://www.google.com/maps/search/?api=1&query=1262+Embankment+Road,+Centurion,+South+Africa",
+    
+    // Operating Hours Schedule (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
+    schedule: {
+        1: { name: "Monday", open: "09:00", close: "19:00", openMin: 540, closeMin: 1140 },
+        2: { name: "Tuesday", open: "09:00", close: "19:00", openMin: 540, closeMin: 1140 },
+        3: { name: "Wednesday", open: "09:00", close: "19:00", openMin: 540, closeMin: 1140 },
+        4: { name: "Thursday", open: "09:00", close: "19:00", openMin: 540, closeMin: 1140 },
+        5: { name: "Friday", open: "09:00", close: "19:00", openMin: 540, closeMin: 1140 },
+        6: { name: "Saturday", open: "09:00", close: "15:00", openMin: 540, closeMin: 900 },
+        0: { name: "Sunday", open: "09:00", close: "15:00", openMin: 540, closeMin: 900 }
+    }
+};
+
+// State variables
+let historyStack = [];
+
+// 2. Real-Time South Africa Opening Hours Calculation
+function getSouthAfricaDateTime() {
+    try {
+        const now = new Date();
+        const formatter = new Intl.DateTimeFormat('en-US', {
+            timeZone: 'Africa/Johannesburg',
+            weekday: 'short',
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            second: 'numeric',
+            hour12: false
+        });
+
+        const parts = formatter.formatToParts(now);
+        const dateObj = {};
+        parts.forEach(p => dateObj[p.type] = p.value);
+
+        // Convert weekday string to numeric day index (0 = Sun, 1 = Mon, etc.)
+        const dayMap = { 'Sun': 0, 'Mon': 1, 'Tue': 2, 'Wed': 3, 'Thu': 4, 'Fri': 5, 'Sat': 6 };
+        const dayOfWeek = dayMap[dateObj.weekday];
+        const hours = parseInt(dateObj.hour, 10);
+        const minutes = parseInt(dateObj.minute, 10);
+        const currentTotalMinutes = (hours * 60) + minutes;
+
+        return { dayOfWeek, currentTotalMinutes, hours, minutes };
+    } catch (e) {
+        // Fallback to local browser time if Intl is somehow restricted
+        const now = new Date();
+        return {
+            dayOfWeek: now.getDay(),
+            currentTotalMinutes: (now.getHours() * 60) + now.getMinutes(),
+            hours: now.getHours(),
+            minutes: now.getMinutes()
+        };
+    }
+}
+
+function calculatePracticeOpeningStatus() {
+    const { dayOfWeek, currentTotalMinutes } = getSouthAfricaDateTime();
+    const todaySchedule = PRACTICE_INFO.schedule[dayOfWeek];
+
+    const isOpen = (currentTotalMinutes >= todaySchedule.openMin && currentTotalMinutes < todaySchedule.closeMin);
+
+    let statusString = "";
+    if (isOpen) {
+        statusString = `We are currently open (Closes at ${todaySchedule.close}).`;
+    } else {
+        if (currentTotalMinutes < todaySchedule.openMin) {
+            statusString = `We are currently closed. We open today at ${todaySchedule.open}.`;
+        } else {
+            // Find next open day
+            const nextDayIndex = (dayOfWeek + 1) % 7;
+            const nextSchedule = PRACTICE_INFO.schedule[nextDayIndex];
+            const dayLabel = (nextDayIndex === (dayOfWeek + 1)) ? "tomorrow" : `on ${nextSchedule.name}`;
+            statusString = `We are currently closed. We reopen ${dayLabel} at ${nextSchedule.open}.`;
+        }
+    }
+
+    return { isOpen, statusString };
+}
+
+function updateHeaderStatusBadge() {
+    const badgeDot = document.getElementById('statusDot');
+    const badgeText = document.getElementById('statusText');
+    const { isOpen, statusString } = calculatePracticeOpeningStatus();
+
+    if (isOpen) {
+        badgeDot.className = 'status-dot open';
+        badgeText.textContent = 'Open Now';
+    } else {
+        badgeDot.className = 'status-dot closed';
+        badgeText.textContent = 'Closed Now';
+    }
+    document.getElementById('liveStatusBadge').setAttribute('title', statusString);
+}
+
+// Helper to format timestamps
+function getCurrentTimeString() {
+    const { hours, minutes } = getSouthAfricaDateTime();
+    const hStr = hours < 10 ? '0' + hours : hours;
+    const mStr = minutes < 10 ? '0' + minutes : minutes;
+    return `${hStr}:${mStr}`;
+}
+
+// 3. Conversation Decision Tree & Handlers
+const MENU_NODES = {
+    'main': {
+        prompt: `Hello and welcome to <strong>Protea Care Medical</strong>! 🌸<br><br>I'm your virtual assistant, here to help you navigate our practice services, location, hours, and visit guidelines.<br><br>How may I assist you today? Please select an option below:`,
+        options: [
+            { label: "Our Services", target: "services" },
+            { label: "Opening Hours", target: "hours" },
+            { label: "Find Our Location", target: "location" },
+            { label: "Contact the Practice", target: "contact" },
+            { label: "About Dr Kazzadi", target: "doctor" },
+            { label: "Appointments & Visit Info", target: "appointments" },
+            { label: "Emergency Information", target: "emergency" }
+        ]
+    },
+
+    'services': {
+        prompt: `We offer a range of comprehensive healthcare services to support individuals, women, and families. Please select a service below to learn more:`,
+        options: [
+            { label: "Antenatal Care (BANC Plus)", target: "srv_antenatal" },
+            { label: "Women's Health", target: "srv_womens_health" },
+            { label: "Family Planning", target: "srv_family_planning" },
+            { label: "HIV Testing & Treatment", target: "srv_hiv" },
+            { label: "Chronic Disease Management", target: "srv_chronic" },
+            { label: "General Medical Consultations", target: "srv_general" },
+            { label: "Preventive Healthcare", target: "srv_preventive" },
+            { label: "Minor Procedures", target: "srv_minor_procedures" },
+            { label: "Ultrasound Scans", target: "srv_ultrasound" },
+            { label: "Medical Tests", target: "srv_tests" },
+            { label: "Emergency Care Overview", target: "srv_emergency" }
+        ],
+        hasBack: true
+    },
+
+    // Individual Service Explanations
+    'srv_antenatal': {
+        prompt: `<strong>Antenatal Care — BANC Plus</strong><br><br>Our practice lists comprehensive antenatal care, including the Basic Antenatal Care Plus (BANC Plus) package, among its core clinical services.<br><div class="info-card-box">Please select <strong>Contact the Practice</strong> if you would like to confirm consultation availability or arrange a visit with Dr Kazzadi.</div>`,
+        options: [
+            { label: "Explore Another Service", target: "services" },
+            { label: "Contact the Practice", target: "contact" },
+            { label: "View Opening Hours", target: "hours" }
+        ],
+        hasBack: true
+    },
+
+    'srv_womens_health': {
+        prompt: `<strong>Women's Health</strong><br><br>We provide dedicated women's healthcare services focusing on routine check-ups, reproductive health, and specialized wellness.<br><div class="info-card-box">Please contact the practice to confirm whether your specific concern or required consultation can be accommodated.</div>`,
+        options: [
+            { label: "Explore Another Service", target: "services" },
+            { label: "Contact the Practice", target: "contact" },
+            { label: "About Dr Kazzadi", target: "doctor" }
+        ],
+        hasBack: true
+    },
+
+    'srv_family_planning': {
+        prompt: `<strong>Family Planning</strong><br><br>Our listed services include family planning and contraceptive counseling tailored to your individual reproductive choices.<br><div class="info-card-box">Contact the practice directly for guidance on available consultations and suitable options.</div>`,
+        options: [
+            { label: "Explore Another Service", target: "services" },
+            { label: "Contact the Practice", target: "contact" }
+        ],
+        hasBack: true
+    },
+
+    'srv_hiv': {
+        prompt: `<strong>HIV Testing & Treatment</strong><br><br>Our listed services include confidential HIV testing, post-exposure prophylaxis, and long-term management under university-qualified expertise.<br><div class="info-card-box">For confidential service information and to arrange a private consultation, please contact the practice directly.</div>`,
+        options: [
+            { label: "Explore Another Service", target: "services" },
+            { label: "Contact the Practice", target: "contact" },
+            { label: "About Dr Kazzadi", target: "doctor" }
+        ],
+        hasBack: true
+    },
+
+    'srv_chronic': {
+        prompt: `<strong>Chronic Disease Management</strong><br><br>We offer ongoing care, monitoring, and treatment plans for long-term health conditions.<br><div class="info-card-box">Contact the practice to confirm whether we can assist with your specific condition and what documentation to bring to your consultation.</div>`,
+        options: [
+            { label: "Explore Another Service", target: "services" },
+            { label: "Contact the Practice", target: "contact" },
+            { label: "Appointments Info", target: "appointments" }
+        ],
+        hasBack: true
+    },
+
+    'srv_general': {
+        prompt: `<strong>General Medical Consultations</strong><br><br>We provide primary healthcare consultations for acute illnesses, physical check-ups, and general health evaluations.<br><div class="info-card-box">Contact the practice for details on scheduling or arranging a consultation.</div>`,
+        options: [
+            { label: "Explore Another Service", target: "services" },
+            { label: "Contact the Practice", target: "contact" },
+            { label: "View Opening Hours", target: "hours" }
+        ],
+        hasBack: true
+    },
+
+    'srv_preventive': {
+        prompt: `<strong>Preventive Healthcare</strong><br><br>Our clinical practice emphasizes proactive healthcare screenings, routine physicals, and risk assessment.<br><div class="info-card-box">Contact the practice to discuss your specific preventive health requirements.</div>`,
+        options: [
+            { label: "Explore Another Service", target: "services" },
+            { label: "Contact the Practice", target: "contact" }
+        ],
+        hasBack: true
+    },
+
+    'srv_minor_procedures': {
+        prompt: `<strong>Minor Procedures</strong><br><br>Minor outpatient surgical and clinical procedures are included among our practice services.<br><div class="info-card-box">Please contact the practice to confirm which specific minor procedures are available in-office.</div>`,
+        options: [
+            { label: "Explore Another Service", target: "services" },
+            { label: "Contact the Practice", target: "contact" }
+        ],
+        hasBack: true
+    },
+
+    'srv_ultrasound': {
+        prompt: `<strong>Ultrasound Scans</strong><br><br>Ultrasound imaging is listed among our practice facilities.<br><div class="info-card-box">Please contact the practice to confirm scan types offered, equipment availability, and whether a referral or specific preparation is required.</div>`,
+        options: [
+            { label: "Explore Another Service", target: "services" },
+            { label: "Contact the Practice", target: "contact" }
+        ],
+        hasBack: true
+    },
+
+    'srv_tests': {
+        prompt: `<strong>Medical Tests</strong><br><br>Routine medical laboratory tests and diagnostic investigations are included in our practice services.<br><div class="info-card-box">Please contact the practice to confirm test availability and any fast or specific visit preparations needed.</div>`,
+        options: [
+            { label: "Explore Another Service", target: "services" },
+            { label: "Contact the Practice", target: "contact" }
+        ],
+        hasBack: true
+    },
+
+    'srv_emergency': {
+        prompt: `<strong>Emergency Care Note</strong><br><br>The practice lists emergency care among its services during practice operating hours.<br><div class="alert-card-box"><strong>IMPORTANT SAFETY NOTICE:</strong> This virtual receptionist cannot evaluate medical emergencies or dispatch emergency medical assistance. If you are experiencing a life-threatening emergency, please seek immediate hospital or ambulance assistance immediately.</div>`,
+        options: [
+            { label: "Emergency Information", target: "emergency" },
+            { label: "Contact the Practice", target: "contact" },
+            { label: "Explore Another Service", target: "services" }
+        ],
+        hasBack: true
+    },
+
+    // OPENING HOURS NODE
+    'hours': {
+        prompt: () => {
+            const { statusString } = calculatePracticeOpeningStatus();
+            return `<strong>Operating Hours — Protea Care Medical</strong><br><br>
+            <div class="info-card-box" style="margin-bottom: 12px; border-left: 4px solid var(--color-gold);">
+                <strong>Current Live Status:</strong><br>${statusString}
+            </div>
+            <strong>Weekly Schedule:</strong><br>
+            • <strong>Monday:</strong> 09:00 – 19:00<br>
+            • <strong>Tuesday:</strong> 09:00 – 19:00<br>
+            • <strong>Wednesday:</strong> 09:00 – 19:00<br>
+            • <strong>Thursday:</strong> 09:00 – 19:00<br>
+            • <strong>Friday:</strong> 09:00 – 19:00<br>
+            • <strong>Saturday:</strong> 09:00 – 15:00<br>
+            • <strong>Sunday:</strong> 09:00 – 15:00<br><br>
+            <small><em>* Note: For public holiday hours, please contact the practice directly to confirm availability.</em></small>`;
+        },
+        options: [
+            { label: "Find Our Location", target: "location" },
+            { label: "Contact the Practice", target: "contact" },
+            { label: "Appointments Info", target: "appointments" }
+        ],
+        hasBack: true
+    },
+
+    // LOCATION NODE
+    'location': {
+        prompt: `<strong>Practice Location</strong><br><br>
+        <strong>Protea Care Medical (Pty) Ltd</strong><br>
+        1262 Embankment Road<br>
+        Opposite Centurion Mall<br>
+        Centurion, South Africa<br><br>
+        We are conveniently situated directly opposite Centurion Mall for easy access.<br><br>
+        <a href="${PRACTICE_INFO.mapsQueryUrl}" target="_blank" rel="noopener noreferrer" class="action-link-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Open in Google Maps
+        </a>`,
+        options: [
+            { label: "View Opening Hours", target: "hours" },
+            { label: "Contact the Practice", target: "contact" }
+        ],
+        hasBack: true
+    },
+
+    // CONTACT NODE
+    'contact': {
+        prompt: `<strong>Contact Protea Care Medical</strong><br><br>
+        Our team is available during operating hours to assist with your enquiries, bookings, and service confirmations.<br><br>
+        📞 <strong>Telephone:</strong> ${PRACTICE_INFO.phone}<br>
+        ✉️ <strong>Email:</strong> ${PRACTICE_INFO.email}<br>
+        📍 <strong>Address:</strong> 1262 Embankment Road, Opposite Centurion Mall, Centurion<br><br>
+        <a href="${PRACTICE_INFO.telLink}" class="action-link-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            Call 012 643 1191
+        </a>
+        <a href="${PRACTICE_INFO.mailtoLink}" class="action-link-btn secondary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Send Email
+        </a>`,
+        options: [
+            { label: "View Location", target: "location" },
+            { label: "View Opening Hours", target: "hours" },
+            { label: "About Dr Kazzadi", target: "doctor" }
+        ],
+        hasBack: true
+    },
+
+    // DOCTOR NODE
+    'doctor': {
+        prompt: `<strong>Medical Practitioner Details</strong><br><br>
+        <strong>${PRACTICE_INFO.doctor}</strong><br><br>
+        <strong>Qualifications & Credentials:</strong><br>
+        • MBChB (UKZN)<br>
+        • Dip-Obst (SA)<br>
+        • Primary FCOG (SA)<br>
+        • PGDip-HIV/AIDS Management, Stellenbosch University<br><br>
+        <strong>Practice Registration Details:</strong><br>
+        • Practice Number: ${PRACTICE_INFO.practiceNum}<br>
+        • Professional Number: ${PRACTICE_INFO.professionalNum}<br><br>
+        <strong>Clinical Focus Areas:</strong><br>
+        ${PRACTICE_INFO.focusAreas}`,
+        options: [
+            { label: "Explore Our Services", target: "services" },
+            { label: "Contact the Practice", target: "contact" }
+        ],
+        hasBack: true
+    },
+
+    // APPOINTMENTS NODE
+    'appointments': {
+        prompt: `<strong>Appointments & Visit Information</strong><br><br>
+        Please choose a specific topic below to learn how to prepare for your visit:`,
+        options: [
+            { label: "How Do I Arrange a Visit?", target: "apt_how" },
+            { label: "What Should I Bring?", target: "apt_bring" },
+            { label: "Confirm Service Availability", target: "apt_avail" },
+            { label: "Appointment Requirements", target: "apt_reqs" }
+        ],
+        hasBack: true
+    },
+
+    'apt_how': {
+        prompt: `<strong>How Do I Arrange a Visit?</strong><br><br>
+        Please contact Protea Care Medical directly on <strong>012 643 1191</strong> or email <strong>proteacaremedical@gmail.com</strong> to inquire about consultation slots and the next available visit time.`,
+        options: [
+            { label: "Call the Practice Now", target: "contact" },
+            { label: "Other Visit Questions", target: "appointments" }
+        ],
+        hasBack: true
+    },
+
+    'apt_bring': {
+        prompt: `<strong>What Should I Bring to My Visit?</strong><br><br>
+        Please contact the practice to confirm specific requirements for your consultation. Generally, you may wish to bring:<br>
+        • A valid ID or Identification document<br>
+        • Relevant medical history or previous records<br>
+        • A list of current medications you are taking<br>
+        • Any medical referral documents (if applicable)`,
+        options: [
+            { label: "Contact Practice", target: "contact" },
+            { label: "Other Visit Questions", target: "appointments" }
+        ],
+        hasBack: true
+    },
+
+    'apt_avail': {
+        prompt: `<strong>Confirm Service Availability</strong><br><br>
+        Our virtual receptionist provides information on services listed by the practice, but cannot confirm live real-time booking availability.<br><br>
+        Please call <strong>012 643 1191</strong> or email us to confirm today's doctor availability.`,
+        options: [
+            { label: "Contact Practice", target: "contact" },
+            { label: "View Opening Hours", target: "hours" }
+        ],
+        hasBack: true
+    },
+
+    'apt_reqs': {
+        prompt: `<strong>Appointment Requirements</strong><br><br>
+        Requirements vary depending on the service (e.g., specialized tests, ultrasound scans, or routine consultations). Please contact our medical receptionist directly for accurate prep guidance.`,
+        options: [
+            { label: "Contact Practice", target: "contact" },
+            { label: "Explore Our Services", target: "services" }
+        ],
+        hasBack: true
+    },
+
+    // EMERGENCY NODE
+    'emergency': {
+        prompt: `<div class="alert-card-box">
+            <strong style="font-size: 1.05rem;">🚨 EMERGENCY NOTICE</strong><br><br>
+            If you or someone nearby may be experiencing a life-threatening medical emergency, <strong>seek immediate emergency assistance</strong> or go to the nearest emergency medical centre.<br><br>
+            <strong>Do not wait for this virtual assistant or rely on it to assess your symptoms.</strong>
+        </div>
+        <br>For general practice inquiries during opening hours, you may call our reception:`,
+        options: [
+            { label: "Call Practice (012 643 1191)", target: "contact" },
+            { label: "View Opening Hours", target: "hours" }
+        ],
+        hasBack: true
+    }
+};
+
+// 4. RENDERING & DISPLAY FUNCTIONS
+
+/**
+ * Render user selected choice bubble into chat
+ */
+function appendUserChoiceBubble(text) {
+    const chatBody = document.getElementById('chatBody');
+
+    const messageGroup = document.createElement('div');
+    messageGroup.className = 'message-group user';
+
+    const label = document.createElement('span');
+    label.className = 'sender-label';
+    label.textContent = 'You';
+
+    const bubble = document.createElement('div');
+    bubble.className = 'message-bubble';
+    bubble.textContent = text;
+
+    const time = document.createElement('span');
+    time.className = 'message-time';
+    time.textContent = getCurrentTimeString();
+
+    messageGroup.appendChild(label);
+    messageGroup.appendChild(bubble);
+    messageGroup.appendChild(time);
+
+    chatBody.appendChild(messageGroup);
+    scrollToBottom();
+}
+
+/**
+ * Render Bot Response Bubble and clickable option controls
+ */
+function renderBotNode(nodeKey, userChoiceLabel = null) {
+    const node = MENU_NODES[nodeKey];
+    if (!node) return;
+
+    if (userChoiceLabel) {
+        appendUserChoiceBubble(userChoiceLabel);
+    }
+
+    const chatBody = document.getElementById('chatBody');
+
+    // Bot Container Group
+    const messageGroup = document.createElement('div');
+    messageGroup.className = 'message-group bot';
+
+    const label = document.createElement('span');
+    label.className = 'sender-label';
+    label.textContent = 'Protea Care Virtual Assistant';
+
+    const bubble = document.createElement('div');
+    bubble.className = 'message-bubble';
+
+    // Evaluate prompt if dynamic function, else string HTML
+    const promptText = (typeof node.prompt === 'function') ? node.prompt() : node.prompt;
+    bubble.innerHTML = promptText;
+
+    // Render Option Buttons Grid
+    if (node.options && node.options.length > 0) {
+        const optionsWrapper = document.createElement('div');
+        optionsWrapper.className = 'options-wrapper';
+
+        node.options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.type = 'button';
+            btn.innerHTML = `<span>${opt.label}</span><span class="btn-arrow" aria-hidden="true">→</span>`;
+            
+            btn.addEventListener('click', () => {
+                // Remove previous interactive buttons from history view to keep interface tidy
+                optionsWrapper.querySelectorAll('button').forEach(b => b.disabled = true);
+                
+                // Track history stack
+                historyStack.push(nodeKey);
+                
+                // Render Next Step
+                renderBotNode(opt.target, opt.label);
+            });
+
+            optionsWrapper.appendChild(btn);
+        });
+
+        bubble.appendChild(optionsWrapper);
+    }
+
+    // Render Navigation (Back / Main Menu) actions
+    const navActions = document.createElement('div');
+    navActions.className = 'navigation-actions';
+
+    if (node.hasBack && historyStack.length > 0) {
+        const backBtn = document.createElement('button');
+        backBtn.className = 'nav-btn';
+        backBtn.type = 'button';
+        backBtn.innerHTML = `← Back`;
+        backBtn.addEventListener('click', () => {
+            const previousNode = historyStack.pop() || 'main';
+            renderBotNode(previousNode, 'Back');
+        });
+        navActions.appendChild(backBtn);
+    }
+
+    if (nodeKey !== 'main') {
+        const mainMenuBtn = document.createElement('button');
+        mainMenuBtn.className = 'nav-btn';
+        mainMenuBtn.type = 'button';
+        mainMenuBtn.innerHTML = `🏠 Main Menu`;
+        mainMenuBtn.addEventListener('click', () => {
+            historyStack = [];
+            renderBotNode('main', 'Main Menu');
+        });
+        navActions.appendChild(mainMenuBtn);
+    }
+
+    if (navActions.children.length > 0) {
+        bubble.appendChild(navActions);
+    }
+
+    const time = document.createElement('span');
+    time.className = 'message-time';
+    time.textContent = getCurrentTimeString();
+
+    messageGroup.appendChild(label);
+    messageGroup.appendChild(bubble);
+    messageGroup.appendChild(time);
+
+    chatBody.appendChild(messageGroup);
+    scrollToBottom();
+}
+
+function scrollToBottom() {
+    const chatBody = document.getElementById('chatBody');
+    setTimeout(() => {
+        chatBody.scrollTop = chatBody.scrollHeight;
+    }, 50);
+}
+
+function restartChat() {
+    document.getElementById('chatBody').innerHTML = '';
+    historyStack = [];
+    renderBotNode('main');
+}
+
+// 5. INITIALIZATION
+window.addEventListener('DOMContentLoaded', () => {
+    // Update live status badge
+    updateHeaderStatusBadge();
+    // Update status badge every 60 seconds
+    setInterval(updateHeaderStatusBadge, 60000);
+
+    // Bind header reset button
+    document.getElementById('resetChatBtn').addEventListener('click', () => {
+        restartChat();
+    });
+
+    // Start initial conversation
+    renderBotNode('main');
+});
+</script>
+
+</body>
+</html>
