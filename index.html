@@ -51,19 +51,19 @@
         /* Floating AI Widget Animations & Styling */
         @keyframes subtleFloat {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-4px); }
+            50% { transform: translateY(-8px); }
         }
         @keyframes softPulse {
             0% { box-shadow: 0 0 0 0 rgba(237, 232, 130, 0.4); }
-            70% { box-shadow: 0 0 0 8px rgba(237, 232, 130, 0); }
+            70% { box-shadow: 0 0 0 10px rgba(237, 232, 130, 0); }
             100% { box-shadow: 0 0 0 0 rgba(237, 232, 130, 0); }
         }
         .ai-floating-widget {
-            animation: subtleFloat 4s ease-in-out infinite, softPulse 3s infinite;
+            animation: subtleFloat 3s ease-in-out infinite, softPulse 3s infinite;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
         .ai-floating-widget:hover {
-            transform: translateY(-2px) scale(1.02);
+            transform: scale(1.05);
         }
         @media (prefers-reduced-motion: reduce) {
             .ai-floating-widget {
@@ -130,8 +130,8 @@
         <div id="page-home" class="page-view">
             <!-- Hero Section with hero1.jpg Background Overlay -->
             <section class="relative py-20 lg:py-32 px-4 sm:px-6 lg:px-8 bg-brandNavy text-white overflow-hidden">
-                <div class="absolute inset-0 bg-cover bg-center opacity-25 mix-blend-overlay" style="background-image: url('hero1.jpg');"></div>
-                <div class="absolute inset-0 bg-gradient-to-r from-brandNavy/70 via-brandNavy/55 to-brandNavy/40"></div>
+                <div class="absolute inset-0 bg-cover bg-center opacity-45 mix-blend-overlay" style="background-image: url('hero1.jpg');"></div>
+                <div class="absolute inset-0 bg-gradient-to-r from-brandNavy/40 via-brandNavy/30 to-brandNavy/20"></div>
                 
                 <div class="max-w-7xl mx-auto relative z-10">
                     <div class="grid lg:grid-cols-12 gap-12 items-center">
@@ -673,14 +673,8 @@
 
     <!-- PREMIUM FLOATING AI VIRTUAL RECEPTIONIST WIDGET -->
     <div class="fixed bottom-6 right-6 z-50">
-        <a href="/virtualreceptionist" aria-label="Open Virtual Receptionist" class="ai-floating-widget flex items-center gap-3 bg-brandNavy text-white px-4 py-3.5 rounded-full shadow-xl border border-brandYellow/40 hover:bg-brandNavy/95 focus:outline-none focus:ring-2 focus:ring-brandYellow">
-            <div class="w-9 h-9 rounded-full bg-brandYellow/15 border border-brandYellow/60 text-brandYellow flex items-center justify-center flex-shrink-0">
-                <i data-lucide="bot" class="w-5 h-5"></i>
-            </div>
-            <div class="flex flex-col text-left pr-1">
-                <span class="text-xs font-bold tracking-wider uppercase text-white leading-tight">Virtual Receptionist</span>
-                <span class="text-[10px] text-brandYellow tracking-wide font-medium">Meet your AI assistant</span>
-            </div>
+        <a href="/virtualreceptionist" aria-label="Open Virtual Receptionist" class="ai-floating-widget w-14 h-14 rounded-full bg-brandNavy text-white shadow-xl border border-brandYellow/40 hover:bg-brandNavy/95 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-brandYellow">
+            <i data-lucide="bot" class="w-6 h-6 text-brandYellow"></i>
         </a>
     </div>
 
